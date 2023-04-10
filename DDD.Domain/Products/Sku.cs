@@ -6,7 +6,7 @@ public record Sku : IValueObject
 {
     private const int DefaultLength = 15;
 
-    private string Value { get; }
+    public string Value { get; }
 
     private Sku(string value) => Value = value;
 
