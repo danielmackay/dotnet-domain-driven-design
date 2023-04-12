@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Customers;
-using DDD.Domain.Orders;
+﻿using DDD.Domain.Common;
 using DDD.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -10,22 +9,24 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
-        throw new NotImplementedException();
+        builder.HasKey(p => p.Id);
+
+        builder.Property(p => p.Id)
+              .HasConversion(productId => productId.Value, value => new ProductId(value));
+
+        builder.Property(p => p.Sku)
+            .HasConversion(sku => sku.Value, value => Sku.Create(value)!)
+            .HasMaxLength(50);
+
+        builder.OwnsOne(p => p.Price, MoneyConfiguration.BuildAction);
     }
 }
 
-internal class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+internal static class MoneyConfiguration
 {
-    public void Configure(EntityTypeBuilder<Customer> builder)
+    internal static void BuildAction<T>(OwnedNavigationBuilder<T, Money> priceBuilder) where T : class
     {
-        throw new NotImplementedException();
-    }
-}
-
-internal class OrderConfiguration : IEntityTypeConfiguration<Order>
-{
-    public void Configure(EntityTypeBuilder<Order> builder)
-    {
-        throw new NotImplementedException();
+        priceBuilder.Property(m => m.Currency).HasMaxLength(3);
+        priceBuilder.Property(m => m.Amount).HasPrecision(18, 2);
     }
 }
