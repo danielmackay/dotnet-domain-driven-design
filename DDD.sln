@@ -5,15 +5,16 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.Domain", "DDD.Domain\DDD.Domain.csproj", "{CBF41725-84D2-4E0F-A0F4-9D32C177A69F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD.Infrastructure", "DDD.Infrastructure\DDD.Infrastructure.csproj", "{B4FAA6F4-0EB7-4A6F-A11B-F5E7C00BD20C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.Infrastructure", "DDD.Infrastructure\DDD.Infrastructure.csproj", "{B4FAA6F4-0EB7-4A6F-A11B-F5E7C00BD20C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD.Application", "DDD.Application\DDD.Application.csproj", "{3B7215A4-934F-46F7-9881-08692D806067}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.Application", "DDD.Application\DDD.Application.csproj", "{3B7215A4-934F-46F7-9881-08692D806067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD.WebApi", "DDD.WebApi\DDD.WebApi.csproj", "{DA3B9A6A-6F30-45E7-A07C-BF30C86D5192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.WebApi", "DDD.WebApi\DDD.WebApi.csproj", "{DA3B9A6A-6F30-45E7-A07C-BF30C86D5192}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C92B8DC0-A461-4606-A40D-806712BEA9BD}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
