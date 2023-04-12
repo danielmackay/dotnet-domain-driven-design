@@ -10,3 +10,10 @@
   - factory methods
 - All properties should be readonly (i.e. private)
 - Entities cannot be modified outside of their aggregate root
+
+## Features
+
+- Aggregate Roots
+- Entities
+- Value Objects
+- Strongly Typed IDs
