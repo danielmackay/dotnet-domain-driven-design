@@ -10,6 +10,8 @@ public class Order : IAggregateRoot
     // Ensures lined items are unique
     private readonly HashSet<LineItem> _lineItems = new();
 
+    public IReadOnlyList<LineItem> LineItems => _lineItems.ToList();
+
     public required OrderId Id { get; init; }
 
     public required CustomerId CustomerId { get; init; }

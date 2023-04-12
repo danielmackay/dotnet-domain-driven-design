@@ -6,14 +6,16 @@ namespace DDD.Domain.Orders;
 
 public class LineItem : IValueObject
 {
-    public LineItemId Id { get; }
+    public LineItemId Id { get; } = null!;
 
-    public OrderId OrderId { get; }
+    public OrderId OrderId { get; } = null!;
 
-    public ProductId ProductId { get; }
+    public ProductId ProductId { get; } = null!;
 
     // Detatch price from product to capture the price at the time of purchase
-    public Money Price { get; }
+    public Money Price { get; } = null!;
+
+    private LineItem() { }
 
     // Internal so that only the Order can create a LineItem
     internal LineItem(OrderId orderId, ProductId productId, Money price)
