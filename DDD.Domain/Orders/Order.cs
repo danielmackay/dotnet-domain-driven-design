@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Customers;
+﻿using DDD.Domain.Common;
+using DDD.Domain.Customers;
 using DDD.Domain.Interfaces;
 using DDD.Domain.Products;
 
@@ -9,29 +10,24 @@ public class Order : IAggregateRoot
     // Ensures lined items are unique
     private readonly HashSet<LineItem> _lineItems = new();
 
-    public Guid Id { get; init; }
+    public required OrderId Id { get; init; }
 
-    public Guid CustomerId { get; init; }
+    public required CustomerId CustomerId { get; init; }
 
-    private Order()
+    private Order() { }
+
+    public static Order? Create(CustomerId customerId) => new()
     {
-    }
+        Id = new OrderId(Guid.NewGuid()),
+        CustomerId = customerId,
+    };
 
-    public static Order? Create(Customer customer)
+    public void AddLineItem(ProductId productId, Money price)
     {
-        var order = new Order
-        {
-            Id = Guid.NewGuid(),
-            CustomerId = customer.Id,
-        };
-
-        return order;
-    }
-
-    // TODO: Pass in ProductId instead
-    public void AddLineItem(Product product)
-    {
-        var lineItem = new LineItem(Guid.NewGuid(), Id, product.Id, product.Price);
+        var lineItem = new LineItem(Id, productId, price);
         _lineItems.Add(lineItem);
     }
 }
+
+public record OrderId(Guid Value);
+
