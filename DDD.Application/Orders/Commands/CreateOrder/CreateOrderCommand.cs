@@ -2,7 +2,7 @@
 using DDD.Domain.Customers;
 using DDD.Domain.Orders;
 
-namespace DDD.Application.Orders.Commands.CreateCustomer;
+namespace DDD.Application.Orders.Commands.CreateOrder;
 
 public record CreateOrderCommand(Guid CustomerId) : IRequest<Guid>;
 

@@ -1,9 +1,10 @@
-﻿using DDD.Application.Orders.Commands.CreateCustomer;
+﻿using DDD.Application.Orders.Commands.CreateLineItem;
+using DDD.Application.Orders.Commands.CreateOrder;
 using DDD.Application.Orders.Queries.GetAllOrders;
 using DDD.WebApi.Extensions;
 using MediatR;
 
-namespace DDD.WebApi.Features;
+namespace DDD.WebApi.Endpoints;
 
 public static class OrderEndpoints
 {
@@ -22,6 +23,15 @@ public static class OrderEndpoints
         group
             .MapPost("/", (ISender sender, CreateOrderCommand command, CancellationToken ct) => sender.Send(command, ct))
             .WithName("CreateOrder")
+            .ProducesPost();
+
+        group
+            .MapPost("/{orderId:Guid}/lineitems", (ISender sender, Guid orderId, CreateLineItemCommand command, CancellationToken ct) =>
+            {
+                command.OrderId = orderId;
+                sender.Send(command, ct);
+            })
+            .WithName("CreateLineItem")
             .ProducesPost();
     }
 }

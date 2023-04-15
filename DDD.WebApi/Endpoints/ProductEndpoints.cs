@@ -3,7 +3,7 @@ using DDD.Application.Products.Queries.GetAllProducts;
 using DDD.WebApi.Extensions;
 using MediatR;
 
-namespace DDD.WebApi.Features;
+namespace DDD.WebApi.Endpoints;
 
 public static class ProductEndpoints
 {

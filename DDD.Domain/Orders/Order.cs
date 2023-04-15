@@ -43,15 +43,19 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         return order;
     }
 
-    public void AddLineItem(ProductId productId, Money price)
+    public LineItem AddLineItem(ProductId productId, Money price)
     {
         var lineItem = LineItem.Create(Id, productId, price);
 
-        var first = _lineItems[0];
+        var first = _lineItems.FirstOrDefault();
         if (first != null && first.Price.Currency != lineItem.Price.Currency)
             throw new DomainException($"Cannot add line item with currency {lineItem.Price.Currency} to and order than already contains a currency of {first.Price.Currency}");
 
+        lineItem.AddDomainEvent(new LineItemCreatedEvent(lineItem));
+
         _lineItems.Add(lineItem);
+
+        return lineItem;
     }
 }
 

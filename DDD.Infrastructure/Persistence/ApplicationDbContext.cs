@@ -14,11 +14,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     private readonly EntitySaveChangesInterceptor _saveChangesInterceptor;
     private readonly IMediator _mediator;
 
-    public DbSet<Product> Products { get; set; } = null!;
+    public required DbSet<Product> Products { get; set; }
 
-    public DbSet<Customer> Customers { get; set; } = null!;
+    public required DbSet<Customer> Customers { get; set; }
 
-    public DbSet<Order> Orders { get; set; } = null!;
+    public required DbSet<Order> Orders { get; set; }
 
     public ApplicationDbContext(DbContextOptions options, EntitySaveChangesInterceptor saveChangesInterceptor, IMediator mediator) : base(options)
     {

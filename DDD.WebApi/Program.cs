@@ -3,7 +3,7 @@ using DDD.Infrastructure.Persistence;
 using DDD.WebApi;
 using DDD.Application;
 using DDD.WebApi.Filters;
-using DDD.WebApi.Features;
+using DDD.WebApi.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 

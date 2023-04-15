@@ -1,4 +1,4 @@
-﻿namespace DDD.Application.Orders.Commands.CreateCustomer;
+﻿namespace DDD.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
