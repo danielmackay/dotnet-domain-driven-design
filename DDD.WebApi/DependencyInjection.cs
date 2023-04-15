@@ -1,6 +1,5 @@
 ﻿using DDD.Application.Common.Interfaces;
 using DDD.WebApi.Services;
-using Infrastructure.Persistence;
 
 namespace DDD.WebApi;
 
@@ -11,10 +10,10 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-        services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
+        //services.AddHealthChecks()
+        //    .AddDbContextCheck<ApplicationDbContext>();
 
-        services.AddOpenApiDocument(configure => configure.Title = "CleanArchitecture API");
+        //services.AddOpenApiDocument(configure => configure.Title = "CleanArchitecture API");
 
         services.AddEndpointsApiExplorer();
     }

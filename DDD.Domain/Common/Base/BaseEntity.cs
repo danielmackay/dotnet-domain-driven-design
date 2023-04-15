@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DDD.Domain.Common;
+namespace DDD.Domain.Common.Base;
 
 public abstract class BaseEntity : AuditableEntity
 {
@@ -18,5 +18,5 @@ public abstract class BaseEntity : AuditableEntity
 
 public abstract class BaseEntity<TId> : BaseEntity
 {
-    public TId Id { get; set; } = default!;
+    public required TId Id { get; init; }
 }

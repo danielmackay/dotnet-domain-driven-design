@@ -1,2 +1,1 @@
-﻿global using Domain.Common;
-global using Domain.Enum;
+﻿global using DDD.Domain.Common;

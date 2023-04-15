@@ -1,5 +1,5 @@
 ﻿using DDD.Application.Common.Interfaces;
-using DDD.Domain.Common;
+using DDD.Domain.Common.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
