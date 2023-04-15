@@ -1,8 +1,7 @@
 using DDD.Application.Common.Interfaces;
-using DDD.Application.Orders.Queries.GetAllOrders;
 using Microsoft.EntityFrameworkCore;
 
-namespace DDD.Application.Features.Orders.Queries.GetAllOrders;
+namespace DDD.Application.Orders.Queries.GetAllOrders;
 
 public record GetAllOrdersQuery : IRequest<IEnumerable<OrderDto>>;
 

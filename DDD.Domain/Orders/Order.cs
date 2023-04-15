@@ -30,11 +30,18 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     private Order() { }
 
-    public static Order Create(CustomerId customerId) => new()
+    public static Order Create(CustomerId customerId)
     {
-        Id = new OrderId(Guid.NewGuid()),
-        CustomerId = customerId,
-    };
+        var order = new Order()
+        {
+            Id = new OrderId(Guid.NewGuid()),
+            CustomerId = customerId,
+        };
+
+        order.AddDomainEvent(new OrderCreatedEvent(order));
+
+        return order;
+    }
 
     public void AddLineItem(ProductId productId, Money price)
     {

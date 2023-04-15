@@ -1,4 +1,4 @@
-﻿using DDD.Application.Features.Orders.Queries.GetAllOrders;
+﻿using DDD.Application.Orders.Commands.CreateCustomer;
 using DDD.Application.Orders.Queries.GetAllOrders;
 using DDD.WebApi.Extensions;
 using MediatR;
@@ -19,9 +19,9 @@ public static class OrderEndpoints
             .WithName("GetOrders")
             .ProducesGet<OrderDto[]>();
 
-        //group
-        //    .MapPost("/", (ISender sender, CreateProductCommand command, CancellationToken ct) => sender.Send(command, ct))
-        //    .WithName("CreateProduct")
-        //    .ProducesPost();
+        group
+            .MapPost("/", (ISender sender, CreateOrderCommand command, CancellationToken ct) => sender.Send(command, ct))
+            .WithName("CreateOrder")
+            .ProducesPost();
     }
 }
