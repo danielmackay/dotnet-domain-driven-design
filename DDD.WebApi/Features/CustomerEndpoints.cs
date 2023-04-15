@@ -1,5 +1,5 @@
-﻿using DDD.Application.Features.Customers.Commands.CreateCustomer;
-using DDD.Application.Features.Customers.Queries.GetAllCustomers;
+﻿using DDD.Application.Customers.Commands.CreateCustomer;
+using DDD.Application.Customers.Queries.GetAllCustomers;
 using DDD.WebApi.Extensions;
 using MediatR;
 

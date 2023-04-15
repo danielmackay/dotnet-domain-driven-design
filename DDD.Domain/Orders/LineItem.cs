@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Base;
-using DDD.Domain.Common.Interfaces;
-using DDD.Domain.Products;
+﻿using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 
