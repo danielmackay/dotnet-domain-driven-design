@@ -19,8 +19,8 @@ internal class LineItemConfiguration : IEntityTypeConfiguration<LineItem>
 
         builder.HasOne<Product>()
             .WithMany()
-            .HasForeignKey(li => li.ProductId)
-            .IsRequired();
+            .HasForeignKey(li => li.ProductId);
+            //.IsRequired();
 
         // Do we need to configure the max length of currency here also?
         builder.OwnsOne(li => li.Price, MoneyConfiguration.BuildAction);

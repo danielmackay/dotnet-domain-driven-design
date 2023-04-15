@@ -8,7 +8,7 @@ namespace DDD.Domain.Orders;
 public class Order : IAggregateRoot
 {
     // Ensures lined items are unique
-    private readonly HashSet<LineItem> _lineItems = new();
+    private readonly List<LineItem> _lineItems = new();
 
     public IReadOnlyList<LineItem> LineItems => _lineItems.ToList();
 
@@ -18,7 +18,7 @@ public class Order : IAggregateRoot
 
     private Order() { }
 
-    public static Order? Create(CustomerId customerId) => new()
+    public static Order Create(CustomerId customerId) => new()
     {
         Id = new OrderId(Guid.NewGuid()),
         CustomerId = customerId,

@@ -4,7 +4,7 @@ namespace DDD.Domain.Products;
 
 public record Sku : IValueObject
 {
-    private const int DefaultLength = 15;
+    private const int DefaultLength = 8;
 
     public string Value { get; }
 
