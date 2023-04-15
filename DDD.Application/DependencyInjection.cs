@@ -19,6 +19,7 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
         });
+
         return services;
     }
 }

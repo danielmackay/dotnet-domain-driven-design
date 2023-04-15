@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Customers;
+﻿using DDD.Application.Common.Interfaces;
+using DDD.Domain.Customers;
 using DDD.Domain.Orders;
 using DDD.Domain.Products;
 using DDD.Infrastructure.Common;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly EntitySaveChangesInterceptor _saveChangesInterceptor;
     private readonly IMediator _mediator;
@@ -30,10 +31,12 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_saveChangesInterceptor);
     }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);
