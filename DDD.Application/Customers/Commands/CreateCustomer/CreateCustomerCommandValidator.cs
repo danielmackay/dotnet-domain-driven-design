@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Application.Features.Customers.Commands.CreateCustomer;
 
-public class CreateTodoItemCommandValidator : AbstractValidator<CreateCustomerCommand>
+public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {
     private readonly IApplicationDbContext _dbContext;
 
-    public CreateTodoItemCommandValidator(IApplicationDbContext dbContext)
+    public CreateCustomerCommandValidator(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
 

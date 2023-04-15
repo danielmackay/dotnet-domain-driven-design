@@ -15,8 +15,7 @@ public static class CustomerEndpoints
             .WithOpenApi();
 
         group
-            .MapGet("/", (ISender sender, CancellationToken ct)
-                => sender.Send(new GetAllCustomersQuery(), ct))
+            .MapGet("/", (ISender sender, CancellationToken ct) => sender.Send(new GetAllCustomersQuery(), ct))
             .WithName("GetCustomers")
             .ProducesGet<CustomerDto[]>();
 
