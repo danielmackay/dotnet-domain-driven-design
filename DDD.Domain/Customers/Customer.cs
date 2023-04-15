@@ -1,7 +1,4 @@
-﻿using DDD.Domain.Common.Base;
-using DDD.Domain.Common.Interfaces;
-
-namespace DDD.Domain.Customers;
+﻿namespace DDD.Domain.Customers;
 
 public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
@@ -16,13 +13,20 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     private Customer() { }
 
-    public static Customer Create(string email, string firstName, string lastName) => new()
+    public static Customer Create(string email, string firstName, string lastName)
     {
-        Id = new CustomerId(Guid.NewGuid()),
-        Email = email,
-        FirstName = firstName,
-        LastName = lastName
-    };
+        var customer = new Customer()
+        {
+            Id = new CustomerId(Guid.NewGuid()),
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName
+        };
+
+        customer.AddDomainEvent(new CustomerCreatedEvent(customer));
+
+        return customer;
+    }
 }
 
 public record CustomerId(Guid Value);

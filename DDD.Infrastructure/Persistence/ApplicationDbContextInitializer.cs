@@ -50,7 +50,7 @@ public class ApplicationDbContextInitializer
             return;
 
         var customerFaker = new Faker<Customer>()
-            .CustomInstantiator(f => Customer.Create(f.Person.FirstName, f.Person.LastName, f.Person.Email));
+            .CustomInstantiator(f => Customer.Create(f.Person.Email, f.Person.FirstName, f.Person.LastName));
 
         var customers = customerFaker.Generate(NumCustomers);
         _dbContext.Customers.AddRange(customers);
