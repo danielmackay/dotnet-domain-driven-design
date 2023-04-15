@@ -43,4 +43,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseExceptionFilter();
 app.MapCustomerEndpoints();
+app.MapProductEndpoints();
+
 app.Run();
