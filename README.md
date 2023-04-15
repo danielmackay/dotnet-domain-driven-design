@@ -1,6 +1,6 @@
 # dotnet-ef-domain-driven-design
 
-## Key Points
+## DDD Principles
 
 - Use AggregateRoots for objects that can be created directly
 - Use Entities for objects that are part of an aggregate root and distinguisable by ID (usually a separate table)
@@ -17,3 +17,8 @@
 - Entities
 - Value Objects
 - Strongly Typed IDs
+- Domain events
+
+## Key Design Decisions
+
+- 
