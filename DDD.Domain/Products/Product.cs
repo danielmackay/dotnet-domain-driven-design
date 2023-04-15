@@ -15,7 +15,7 @@ public class Product : IAggregateRoot
 
     private Product() { }
 
-    public static Product? Create(string name, Money price, Sku sku) => new Product
+    public static Product Create(string name, Money price, Sku sku) => new Product
     {
         Id = new ProductId(Guid.NewGuid()),
         Name = name,

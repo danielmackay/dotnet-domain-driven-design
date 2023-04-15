@@ -24,6 +24,9 @@ internal class OrderConfiguration : IEntityTypeConfiguration<Order>
         //    .WithMany()
         //    .HasForeignKey(o => o.CustomerId);
 
+        // NOTE: Line items can be exposed in two ways:
+        // 1. Define a shadow field that tells EF to use the backing field to access the collection
+        // 2. With a read only navigation property on the Order object
         builder.HasMany(o => o.LineItems)
             .WithOne()
             .HasForeignKey(li => li.OrderId)
