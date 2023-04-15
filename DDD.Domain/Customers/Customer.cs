@@ -5,8 +5,6 @@ namespace DDD.Domain.Customers;
 
 public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
-    //public required CustomerId Id { get; init; }
-
     public string Email { get; init; } = string.Empty;
 
     public string FirstName { get; init; } = string.Empty;

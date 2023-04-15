@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Common;
-using DDD.Domain.Common.Base;
+﻿using DDD.Domain.Common.Base;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Products;
 
@@ -7,8 +6,6 @@ namespace DDD.Domain.Orders;
 
 public class LineItem : BaseEntity<LineItemId>, IEntity
 {
-    //public LineItemId Id { get; } = null!;
-
     public required OrderId OrderId { get; init; }
 
     public required ProductId ProductId { get; init; }
