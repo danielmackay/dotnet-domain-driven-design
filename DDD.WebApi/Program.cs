@@ -1,7 +1,10 @@
 using DDD.Infrastructure;
-using Infrastructure.Persistence;
+using DDD.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddWebApi();
+builder.Services.AddApplication();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,9 +30,17 @@ if (app.Environment.IsDevelopment())
     await initializer.InitializeAsync();
     await initializer.SeedAsync();
 }
+else
+{
+    app.UseHsts();
+}
 
+app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 
+app.UseRouting();
+app.UseExceptionFilter();
+app.MapTodoItemEndpoints();
 app.Run();
 
 

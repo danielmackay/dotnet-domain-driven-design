@@ -3,11 +3,10 @@ using DDD.Domain.Common;
 using DDD.Domain.Customers;
 using DDD.Domain.Orders;
 using DDD.Domain.Products;
-using DDD.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Infrastructure.Persistence;
+namespace DDD.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitializer
 {
@@ -29,9 +28,7 @@ public class ApplicationDbContextInitializer
         try
         {
             if (_dbContext.Database.IsSqlServer())
-            {
                 await _dbContext.Database.MigrateAsync();
-            }
         }
         catch (Exception e)
         {

@@ -1,5 +1,5 @@
 ﻿namespace DDD.Domain.Interfaces;
 
-public interface IAggregateRoot
+public interface IValueObject
 {
 }
