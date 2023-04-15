@@ -1,5 +1,4 @@
 ﻿using DDD.Domain.Orders;
-using DDD.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +16,7 @@ internal class LineItemConfiguration : IEntityTypeConfiguration<LineItem>
         builder.Property(li => li.Id)
             .HasConversion(lineItemId => lineItemId.Value, value => new LineItemId(value));
 
-        builder.HasOne<Product>()
+        builder.HasOne(li => li.Product)
             .WithMany()
             .HasForeignKey(li => li.ProductId)
             .IsRequired();

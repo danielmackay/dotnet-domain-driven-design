@@ -8,6 +8,8 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     public required ProductId ProductId { get; init; }
 
+    public Product? Product { get; init; }
+
     // Detatch price from product to capture the price at the time of purchase
     public required Money Price { get; init; }
 

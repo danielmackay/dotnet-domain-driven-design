@@ -1,4 +1,5 @@
-﻿using DDD.Application.Orders.Commands.CreateLineItem;
+﻿using DDD.Application.LineItems.Queries.GetAllLineItems;
+using DDD.Application.Orders.Commands.CreateLineItem;
 using DDD.Application.Orders.Commands.CreateOrder;
 using DDD.Application.Orders.Queries.GetAllOrders;
 using DDD.WebApi.Extensions;
@@ -31,7 +32,12 @@ public static class OrderEndpoints
                 command.OrderId = orderId;
                 sender.Send(command, ct);
             })
-            .WithName("CreateLineItem")
+            .WithName("CreateOrderLineItem")
             .ProducesPost();
+
+        group
+            .MapGet("/{orderId:Guid}/lineitems", (ISender sender, Guid orderId, CancellationToken ct) => sender.Send(new GetAllLineItemsQuery(orderId), ct))
+            .WithName("GetOrderLineItems")
+            .ProducesGet<LineItemDto[]>();
     }
 }
