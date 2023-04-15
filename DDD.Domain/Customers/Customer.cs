@@ -1,11 +1,10 @@
-﻿using DDD.Domain.Interfaces;
+﻿using DDD.Domain.Common.Base;
+using DDD.Domain.Common.Interfaces;
 
 namespace DDD.Domain.Customers;
 
-public class Customer : IAggregateRoot
+public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
-    public required CustomerId Id { get; init; }
-
     public string Email { get; init; } = string.Empty;
 
     public string FirstName { get; init; } = string.Empty;

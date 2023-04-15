@@ -1,5 +1,7 @@
-﻿using DDD.Infrastructure.Persistence;
-using Infrastructure.Persistence;
+﻿using DDD.Application.Common.Interfaces;
+using DDD.Infrastructure.Persistence;
+using DDD.Infrastructure.Persistence.Interceptors;
+using DDD.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +12,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        var connectionString = config.GetConnectionString("DefaultConnection");
+        services.AddScoped<EntitySaveChangesInterceptor>();
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        var connectionString = config.GetConnectionString("DefaultConnection");
+        services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, builder =>
             {
                 builder.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
@@ -20,6 +23,8 @@ public static class DependencyInjection
             }));
 
         services.AddScoped<ApplicationDbContextInitializer>();
+
+        services.AddSingleton<IDateTime, DateTimeService>();
 
         return services;
     }

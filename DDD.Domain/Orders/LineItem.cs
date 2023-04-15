@@ -1,30 +1,28 @@
-﻿using DDD.Domain.Common;
-using DDD.Domain.Interfaces;
+﻿using DDD.Domain.Common.Base;
+using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 
-public class LineItem : IValueObject
+public class LineItem : BaseEntity<LineItemId>, IEntity
 {
-    public LineItemId Id { get; } = null!;
+    public required OrderId OrderId { get; init; }
 
-    public OrderId OrderId { get; } = null!;
-
-    public ProductId ProductId { get; } = null!;
+    public required ProductId ProductId { get; init; }
 
     // Detatch price from product to capture the price at the time of purchase
-    public Money Price { get; } = null!;
+    public required Money Price { get; init; }
 
     private LineItem() { }
 
     // Internal so that only the Order can create a LineItem
-    internal LineItem(OrderId orderId, ProductId productId, Money price)
+    internal static LineItem Create(OrderId orderId, ProductId productId, Money price) => new()
     {
-        Id = new LineItemId(Guid.NewGuid());
-        OrderId = orderId;
-        ProductId = productId;
-        Price = price;
-    }
+        Id = new LineItemId(Guid.NewGuid()),
+        OrderId = orderId,
+        ProductId = productId,
+        Price = price
+    };
 }
 
 public record LineItemId(Guid Value);

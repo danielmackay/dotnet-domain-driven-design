@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Interfaces;
+﻿using DDD.Domain.Common.Interfaces;
 
 namespace DDD.Domain.Common;
 
