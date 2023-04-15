@@ -1,9 +1,8 @@
 using DDD.Application.Common.Interfaces;
-using DDD.Application.Orders.Queries.GetAllOrders;
 using DDD.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 
-namespace DDD.Application.LineItems.Queries.GetAllLineItems;
+namespace DDD.Application.Orders.Queries.GetAllLineItems;
 
 public record GetAllLineItemsQuery(Guid OrderId) : IRequest<IEnumerable<LineItemDto>>;
 

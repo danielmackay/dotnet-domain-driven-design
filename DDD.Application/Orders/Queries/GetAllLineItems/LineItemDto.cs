@@ -1,4 +1,4 @@
-﻿namespace DDD.Application.Orders.Queries.GetAllOrders;
+﻿namespace DDD.Application.Orders.Queries.GetAllLineItems;
 
 public record LineItemDto(Guid Id, ProductDto Product, MoneyDto Price);
 
