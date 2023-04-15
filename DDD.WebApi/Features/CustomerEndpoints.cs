@@ -1,4 +1,5 @@
-﻿using DDD.Application.Features.Customers.Queries.GetAllCustomers;
+﻿using DDD.Application.Features.Customers.Commands.CreateCustomer;
+using DDD.Application.Features.Customers.Queries.GetAllCustomers;
 using DDD.WebApi.Extensions;
 using MediatR;
 
@@ -19,9 +20,9 @@ public static class CustomerEndpoints
             .WithName("GetCustomers")
             .ProducesGet<CustomerDto[]>();
 
-        //group
-        //    .MapPost("/", (ISender sender, CreateTodoItemCommand command, CancellationToken ct) => sender.Send(command, ct))
-        //    .WithName("CreateTodoItem")
-        //    .ProducesPost();
+        group
+            .MapPost("/", (ISender sender, CreateCustomerCommand command, CancellationToken ct) => sender.Send(command, ct))
+            .WithName("CreateTodoItem")
+            .ProducesPost();
     }
 }

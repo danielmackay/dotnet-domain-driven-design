@@ -2,6 +2,6 @@
 
 namespace DDD.Domain.Common.Base;
 
-public class BaseEvent : INotification
+public record BaseEvent : INotification
 {
 }
