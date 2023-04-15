@@ -1,7 +1,4 @@
-﻿using DDD.Domain.Common.Base;
-using DDD.Domain.Common.Interfaces;
-
-namespace DDD.Domain.Products;
+﻿namespace DDD.Domain.Products;
 
 public class Product : BaseEntity<ProductId>, IAggregateRoot
 {
@@ -13,13 +10,20 @@ public class Product : BaseEntity<ProductId>, IAggregateRoot
 
     private Product() { }
 
-    public static Product Create(string name, Money price, Sku sku) => new Product
+    public static Product Create(string name, Money price, Sku sku)
     {
-        Id = new ProductId(Guid.NewGuid()),
-        Name = name,
-        Price = price,
-        Sku = sku
-    };
+        var product = new Product
+        {
+            Id = new ProductId(Guid.NewGuid()),
+            Name = name,
+            Price = price,
+            Sku = sku
+        };
+
+        product.AddDomainEvent(new ProductCreatedEvent(product));
+
+        return product;
+    }
 }
 
 public record ProductId(Guid Value);

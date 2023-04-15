@@ -1,4 +1,5 @@
 ﻿using DDD.Application.Features.Customers.Queries.GetAllCustomers;
+using DDD.Application.Features.Products.Commands.CreateProduct;
 using DDD.WebApi.Extensions;
 using MediatR;
 
@@ -14,14 +15,13 @@ public static class ProductEndpoints
             .WithOpenApi();
 
         group
-            .MapGet("/", (ISender sender, CancellationToken ct)
-                => sender.Send(new GetAllProductsQuery(), ct))
+            .MapGet("/", (ISender sender, CancellationToken ct) => sender.Send(new GetAllProductsQuery(), ct))
             .WithName("GetProducts")
             .ProducesGet<ProductDto[]>();
 
-        //group
-        //    .MapPost("/", (ISender sender, CreateCustomerCommand command, CancellationToken ct) => sender.Send(command, ct))
-        //    .WithName("CreateTodoItem")
-        //    .ProducesPost();
+        group
+            .MapPost("/", (ISender sender, CreateProductCommand command, CancellationToken ct) => sender.Send(command, ct))
+            .WithName("CreateProduct")
+            .ProducesPost();
     }
 }
