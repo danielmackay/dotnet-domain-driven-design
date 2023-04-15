@@ -1,6 +1,6 @@
-﻿using DDD.Application.Features.Products.Commands.CreateProduct;
+﻿using DDD.Application.Products.Commands.CreateProduct;
 
-namespace DDD.Application.Features.Customers.Commands.CreateCustomer;
+namespace DDD.Application.Customers.Commands.CreateCustomer;
 
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {

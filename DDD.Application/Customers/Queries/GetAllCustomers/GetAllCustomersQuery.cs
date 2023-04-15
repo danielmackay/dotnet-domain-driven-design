@@ -1,7 +1,7 @@
 using DDD.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DDD.Application.Features.Customers.Queries.GetAllCustomers;
+namespace DDD.Application.Customers.Queries.GetAllCustomers;
 
 public record GetAllCustomersQuery : IRequest<IEnumerable<CustomerDto>>;
 

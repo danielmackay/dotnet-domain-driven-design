@@ -1,7 +1,7 @@
 ﻿using DDD.Domain.Products;
 using Microsoft.Extensions.Logging;
 
-namespace DDD.Application.Features.Customers.EventHandlers;
+namespace DDD.Application.Customers.EventHandlers;
 
 public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEvent>
 {

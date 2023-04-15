@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Common.Base;
-using DDD.Domain.Common.Interfaces;
+﻿using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Customers;
 using DDD.Domain.Products;
 
@@ -9,9 +8,25 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 {
     private readonly List<LineItem> _lineItems = new();
 
-    public IReadOnlyList<LineItem> LineItems => _lineItems.ToList();
+    public IEnumerable<LineItem> LineItems => _lineItems.ToList();
 
     public required CustomerId CustomerId { get; init; }
+
+    public Customer? Customer { get; set; }
+
+    public Money Total
+    {
+        get
+        {
+            if (_lineItems.Count == 0)
+                return Money.Default;
+
+            var amount = _lineItems.Sum(li => li.Price.Amount);
+            var currency = _lineItems[0].Price.Currency;
+
+            return new Money(currency, amount);
+        }
+    }
 
     private Order() { }
 
@@ -24,6 +39,11 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
     public void AddLineItem(ProductId productId, Money price)
     {
         var lineItem = LineItem.Create(Id, productId, price);
+
+        var first = _lineItems[0];
+        if (first != null && first.Price.Currency != lineItem.Price.Currency)
+            throw new DomainException($"Cannot add line item with currency {lineItem.Price.Currency} to and order than already contains a currency of {first.Price.Currency}");
+
         _lineItems.Add(lineItem);
     }
 }

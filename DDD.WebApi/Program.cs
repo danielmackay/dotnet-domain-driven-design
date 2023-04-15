@@ -14,7 +14,13 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.FullName);
+    options.SchemaGeneratorOptions.SchemaIdSelector = type => type.FullName;
+    //options.MapType<CustomerDto>(() => new Schema { Title = "CustomerDto", Description = "Description of CustomerDto" });
+});
+
 
 var app = builder.Build();
 
@@ -42,7 +48,9 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 app.UseExceptionFilter();
+
 app.MapCustomerEndpoints();
 app.MapProductEndpoints();
+app.MapOrderEndpoints();
 
 app.Run();

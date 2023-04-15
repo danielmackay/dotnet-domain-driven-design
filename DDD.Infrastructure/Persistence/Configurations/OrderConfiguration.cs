@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Customers;
-using DDD.Domain.Orders;
+﻿using DDD.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +13,7 @@ internal class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(o => o.Id)
              .HasConversion(orderId => orderId.Value, value => new OrderId(value));
 
-        builder.HasOne<Customer>()
+        builder.HasOne(o => o.Customer)
             .WithMany()
             .HasForeignKey(o => o.CustomerId)
             .IsRequired();

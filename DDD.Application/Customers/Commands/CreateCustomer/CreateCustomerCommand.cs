@@ -1,7 +1,7 @@
 ﻿using DDD.Application.Common.Interfaces;
 using DDD.Domain.Customers;
 
-namespace DDD.Application.Features.Customers.Commands.CreateCustomer;
+namespace DDD.Application.Customers.Commands.CreateCustomer;
 
 public record CreateCustomerCommand(string Email, string FirstName, string LastName) : IRequest<Guid>;
 

@@ -2,7 +2,7 @@
 using DDD.Domain.Common;
 using DDD.Domain.Products;
 
-namespace DDD.Application.Features.Products.Commands.CreateProduct;
+namespace DDD.Application.Products.Commands.CreateProduct;
 
 public record CreateProductCommand(string Name, string Sku, decimal Amount, string Currency) : IRequest<Guid>;
 
