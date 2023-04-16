@@ -9,5 +9,9 @@ public class CreateLineItemCommandValidator : AbstractValidator<CreateLineItemCo
 
         RuleFor(p => p.ProductId)
             .NotEmpty();
+
+        RuleFor(p => p.Quantity)
+            .NotEmpty()
+            .GreaterThan(0);
     }
 }

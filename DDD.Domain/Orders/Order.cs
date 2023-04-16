@@ -14,7 +14,6 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public Customer? Customer { get; set; }
 
-    // TODO: Add Migration
     public Money AmountPaid { get; private set; }
 
     public OrderStatus Status { get; private set; }
@@ -26,7 +25,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
             if (_lineItems.Count == 0)
                 return Money.Default;
 
-            var amount = _lineItems.Sum(li => li.Price.Amount);
+            var amount = _lineItems.Sum(li => li.Price.Amount * li.Quantity);
             var currency = _lineItems[0].Price.Currency;
 
             return new Money(currency, amount);
@@ -42,9 +41,9 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         AddDomainEvent(new OrderCreatedEvent(this));
     }
 
-    public LineItem AddLineItem(ProductId productId, Money price)
+    public LineItem AddLineItem(ProductId productId, Money price, int quantity)
     {
-        var lineItem = LineItem.Create(Id, productId, price);
+        var lineItem = LineItem.Create(Id, productId, price, quantity);
 
         var first = _lineItems.FirstOrDefault();
         if (first != null && first.Price.Currency != lineItem.Price.Currency)
