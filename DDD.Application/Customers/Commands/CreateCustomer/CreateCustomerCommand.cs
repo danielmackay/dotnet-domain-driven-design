@@ -16,7 +16,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
     public async Task<Guid> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = Customer.Create(request.Email, request.FirstName, request.LastName);
+        var customer = new Customer(request.Email, request.FirstName, request.LastName);
 
         _dbContext.Customers.Add(customer);
         await _dbContext.SaveChangesAsync(cancellationToken);

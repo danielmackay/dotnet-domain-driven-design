@@ -18,5 +18,7 @@ public abstract class BaseEntity : AuditableEntity
 
 public abstract class BaseEntity<TId> : BaseEntity
 {
-    public required TId Id { get; init; }
+    public TId Id { get; }
+
+    protected BaseEntity(TId id) => Id = id;
 }

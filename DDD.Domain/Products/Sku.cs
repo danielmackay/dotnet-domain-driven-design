@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Interfaces;
-
-namespace DDD.Domain.Products;
+﻿namespace DDD.Domain.Products;
 
 public record Sku : IValueObject
 {

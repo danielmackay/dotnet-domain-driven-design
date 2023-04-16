@@ -10,7 +10,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public IEnumerable<LineItem> LineItems => _lineItems.ToList();
 
-    public required CustomerId CustomerId { get; init; }
+    public CustomerId CustomerId { get; }
 
     public Customer? Customer { get; set; }
 
@@ -28,19 +28,11 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         }
     }
 
-    private Order() { }
-
-    public static Order Create(CustomerId customerId)
+    public Order(CustomerId customerId) 
+        : base(new OrderId(Guid.NewGuid()))
     {
-        var order = new Order()
-        {
-            Id = new OrderId(Guid.NewGuid()),
-            CustomerId = customerId,
-        };
-
-        order.AddDomainEvent(new OrderCreatedEvent(order));
-
-        return order;
+        CustomerId = customerId;
+        AddDomainEvent(new OrderCreatedEvent(this));
     }
 
     public LineItem AddLineItem(ProductId productId, Money price)
@@ -58,6 +50,4 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         return lineItem;
     }
 }
-
-public record OrderId(Guid Value);
 

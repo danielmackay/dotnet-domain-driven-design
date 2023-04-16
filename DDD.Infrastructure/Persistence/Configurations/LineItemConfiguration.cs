@@ -1,6 +1,7 @@
 ﻿using DDD.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace DDD.Infrastructure.Persistence.Configurations;
 
@@ -21,9 +22,6 @@ internal class LineItemConfiguration : IEntityTypeConfiguration<LineItem>
             .HasForeignKey(li => li.ProductId)
             .IsRequired();
 
-        // Do we need to configure the max length of currency here also?
         builder.OwnsOne(li => li.Price, MoneyConfiguration.BuildAction);
-
-
     }
 }

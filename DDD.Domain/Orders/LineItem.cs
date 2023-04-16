@@ -13,16 +13,20 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
     // Detatch price from product to capture the price at the time of purchase
     public required Money Price { get; init; }
 
-    private LineItem() { }
-
     // Internal so that only the Order can create a LineItem
-    internal static LineItem Create(OrderId orderId, ProductId productId, Money price) => new()
+    private LineItem() : base(new LineItemId(Guid.NewGuid())) { }
+
+    // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money) be passed via the constructor
+    internal static LineItem Create(OrderId orderId, ProductId productId, Money price)
     {
-        Id = new LineItemId(Guid.NewGuid()),
-        OrderId = orderId,
-        ProductId = productId,
-        Price = price
-    };
+        var lineItem = new LineItem()
+        {
+            OrderId = orderId,
+            ProductId = productId,
+            Price = price
+        };
+
+        return lineItem;
+    }
 }
 
-public record LineItemId(Guid Value);
