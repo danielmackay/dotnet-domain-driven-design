@@ -1,4 +1,4 @@
-﻿namespace DDD.Application.Common.Interfaces;
+﻿namespace DDD.Domain.DomainServices;
 
 public interface IDateTime
 {

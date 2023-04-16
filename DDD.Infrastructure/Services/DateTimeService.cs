@@ -1,4 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
+﻿using DDD.Domain.DomainServices;
 
 namespace DDD.Infrastructure.Services;
 

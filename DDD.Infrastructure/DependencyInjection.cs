@@ -1,4 +1,5 @@
 ﻿using DDD.Application.Common.Interfaces;
+using DDD.Domain.DomainServices;
 using DDD.Infrastructure.Persistence;
 using DDD.Infrastructure.Persistence.Interceptors;
 using DDD.Infrastructure.Persistence.Repositories;

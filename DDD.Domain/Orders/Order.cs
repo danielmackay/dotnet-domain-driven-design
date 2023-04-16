@@ -1,5 +1,6 @@
 ﻿using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Customers;
+using DDD.Domain.DomainServices;
 using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
@@ -17,6 +18,8 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
     public Money AmountPaid { get; private set; }
 
     public OrderStatus Status { get; private set; }
+
+    public DateTimeOffset ShippingDate { get; private set; }
 
     public Money OrderTotal
     {
@@ -86,4 +89,14 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public void RemoveQuantity(ProductId productId, int quantity) =>
         _lineItems.FirstOrDefault(li => li.ProductId == productId)?.RemoveQuantity(quantity);
+
+    public void ShipOrder(IDateTime dateTime)
+    {
+        DomainException.ThrowIf(_lineItems.Sum(li => li.Quantity) <= 0, "Can't ship an order with no items");
+        DomainException.ThrowIf(Status == OrderStatus.PendingPayment, "Can't ship an unpaid order");
+        DomainException.ThrowIf(Status == OrderStatus.InTransit, "Order already shipped to customer");
+
+        ShippingDate = dateTime.Now;
+        Status = OrderStatus.InTransit;
+    }
 }
