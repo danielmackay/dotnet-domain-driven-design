@@ -1,5 +1,16 @@
 # dotnet-ef-domain-driven-design
 
+## Features
+
+- Aggregate Roots
+- Entities
+- Value Objects
+- Strongly Typed IDs
+- Domain events
+- CQRS Commands & Queries
+- Fluent Validation
+- Minimal APIs
+
 ## DDD Principles
 
 ### Aggregate Roots
@@ -16,6 +27,7 @@
 - Not exposed via DbContext
 - Will have a table in the DB
 - Internal factory method for creation so that can only be created via aggregate roots
+- Behaviors should be internal so that they can only be called by the aggregate root
 
 ### Value Objects
 
@@ -31,13 +43,7 @@
 - All properties should be readonly (i.e. private)
 
 
-## Features
 
-- Aggregate Roots
-- Entities
-- Value Objects
-- Strongly Typed IDs
-- Domain events
 
 ## Key Design Decisions
 
@@ -107,3 +113,11 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 ### Use repositories to load aggregate roots
 
 Aggregate roots should be loaded via repositories. This allows us to load the aggregate root and all of its related entities in a single query.  If we were to load the aggregate root directly via the DbContext, we would need to load each related entity separately and introduce possible errors by not loading all of the related entities.
+
+## Thoughts
+
+- Once you start relying on aggregates being loaded as 'entity sets', they must be loaded as such.  While this is possible with EF, it is error-prone if you need to load the same aggregate in multiple places.  To get around this you need to use a repository to load the aggregate root and all of its related entities in a single query.
+- Initially I thought we could use repositories for commands, and then use the DbContext directly for queries, but if you're queries rely on any computed properies that rely on the whole aggregate this isn't possible.  Could get around this though, by not using computed properies and instead storing the computed value in the DB.
+- Can't pass owned entities to constructors, so will need to use factory methods for those.
+- Business logic and validation can now be easily unit tested in isolation via AggregateRoot tests.
+- DDD + CQRS is a heavy weight solution.  It gives us great control by ensuring entites are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
