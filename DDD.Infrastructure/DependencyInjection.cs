@@ -1,6 +1,7 @@
 ﻿using DDD.Application.Common.Interfaces;
 using DDD.Infrastructure.Persistence;
 using DDD.Infrastructure.Persistence.Interceptors;
+using DDD.Infrastructure.Persistence.Repositories;
 using DDD.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ public static class DependencyInjection
         services.AddScoped<ApplicationDbContextInitializer>();
 
         services.AddSingleton<IDateTime, DateTimeService>();
+
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
         return services;
     }

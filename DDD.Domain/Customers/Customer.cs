@@ -9,7 +9,7 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
     public string LastName { get; }
 
     // TODO: Turn this into a value object
-    public string? Address { get; }
+    public string? Address { get; private set; }
 
     public Customer(string email, string firstName, string lastName)
         : base(new CustomerId(Guid.NewGuid()))
@@ -20,4 +20,6 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
         AddDomainEvent(new CustomerCreatedEvent(this));
     }
+
+    public void UpdateAddress(string address) => Address = address;
 }

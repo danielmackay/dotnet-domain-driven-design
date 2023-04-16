@@ -14,7 +14,12 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public Customer? Customer { get; set; }
 
-    public Money Total
+    // TODO: Add Migration
+    public Money AmountPaid { get; private set; }
+
+    public OrderStatus Status { get; private set; }
+
+    public Money OrderTotal
     {
         get
         {
@@ -28,10 +33,12 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         }
     }
 
-    public Order(CustomerId customerId) 
+    public Order(CustomerId customerId)
         : base(new OrderId(Guid.NewGuid()))
     {
         CustomerId = customerId;
+        AmountPaid = Money.Default;
+        Status = OrderStatus.PendingPayment;
         AddDomainEvent(new OrderCreatedEvent(this));
     }
 
@@ -49,5 +56,18 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
         return lineItem;
     }
-}
 
+    public void AddPayment(Money payment)
+    {
+        Guard.Against.NegativeOrZero(payment.Amount);
+        Guard.Against.AgainstExpression(amount => amount > OrderTotal.Amount - AmountPaid.Amount, payment.Amount, "Payment can't exceed order total");
+
+        AmountPaid += payment;
+
+        if (AmountPaid >= OrderTotal)
+        {
+            Status = OrderStatus.ReadyForShipping;
+            AddDomainEvent(new OrderReadyForShippingEvent(this));
+        }
+    }
+}

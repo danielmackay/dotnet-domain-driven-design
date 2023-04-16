@@ -1,4 +1,5 @@
-﻿using DDD.Application.Orders.Commands.CreateLineItem;
+﻿using DDD.Application.Orders.Commands.AddPayment;
+using DDD.Application.Orders.Commands.CreateLineItem;
 using DDD.Application.Orders.Commands.CreateOrder;
 using DDD.Application.Orders.Queries.GetAllLineItems;
 using DDD.Application.Orders.Queries.GetAllOrders;
@@ -39,5 +40,14 @@ public static class OrderEndpoints
             .MapGet("/{orderId:Guid}/lineitems", async (ISender sender, Guid orderId, CancellationToken ct) => await sender.Send(new GetAllLineItemsQuery(orderId), ct))
             .WithName("GetOrderLineItems")
             .ProducesGet<LineItemDto[]>();
+
+        group
+            .MapPost("/{orderId:Guid}/payment", async (ISender sender, Guid orderId, AddPaymentCommand command, CancellationToken ct) =>
+            {
+                command.OrderId = orderId;
+                await sender.Send(command, ct);
+            })
+            .WithName("AddOrderPayment")
+            .ProducesPost();
     }
 }

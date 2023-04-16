@@ -39,14 +39,12 @@ public class EntitySaveChangesInterceptor : SaveChangesInterceptor
         foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
             if (entry.State is EntityState.Added)
             {
-                entry.Entity.CreatedAt = _dateTime.Now;
-                entry.Entity.CreatedBy = _currentUserService.UserId;
+                entry.Entity.Created(_dateTime.Now, _currentUserService.UserId);
             }
             else if (entry.State is EntityState.Added or EntityState.Modified ||
                      entry.HasChangedOwnedEntities())
             {
-                entry.Entity.UpdatedAt = _dateTime.Now;
-                entry.Entity.UpdatedBy = _currentUserService.UserId;
+                entry.Entity.Updated(_dateTime.Now, _currentUserService.UserId);
             }
     }
 }
