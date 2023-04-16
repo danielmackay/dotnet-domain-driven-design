@@ -2,19 +2,19 @@
 
 public class Product : BaseEntity<ProductId>, IAggregateRoot
 {
-    public string Name { get; private init; } = string.Empty;
+    public required string Name { get; init; }
 
     public required Money Price { get; init; }
 
     public required Sku Sku { get; init; }
 
-    private Product() { }
+    private Product() : base(new ProductId(Guid.NewGuid())) { }
 
+    // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money & Sku) be passed via the constructor
     public static Product Create(string name, Money price, Sku sku)
     {
         var product = new Product
         {
-            Id = new ProductId(Guid.NewGuid()),
             Name = name,
             Price = price,
             Sku = sku
@@ -25,5 +25,3 @@ public class Product : BaseEntity<ProductId>, IAggregateRoot
         return product;
     }
 }
-
-public record ProductId(Guid Value);

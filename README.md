@@ -41,4 +41,65 @@
 
 ## Key Design Decisions
 
-- TBC
+### Prefer constructors over factory creation methods
+
+Constructors are preferred as they are simpler and allow properties to be defined easier.
+
+However, EF does not allow owned entities to be passed to constructors, so we will need to revert to factory methods in that case.
+
+Factory Methods:
+
+```cs
+public class Customer : BaseEntity<CustomerId>, IAggregateRoot
+{
+    public required string Email { get; init }
+
+    public required string FirstName { get; init }
+
+    public required string LastName { get; init }
+
+    public string? Address { get; }
+
+    private Customer() { }
+
+    public static Customer Create(string email, string firstName, string lastName)
+    {
+        var customer = new Customer()
+        {
+            Id = new CustomerId(Guid.NewGuid()),
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName
+        };
+
+        customer.AddDomainEvent(new CustomerCreatedEvent(customer));
+
+        return customer;
+    }
+}
+```
+
+Constructor:
+
+```cs
+public class Customer : BaseEntity<CustomerId>, IAggregateRoot
+{
+    public string Email { get; }
+
+    public string FirstName { get; }
+
+    public string LastName { get; }
+
+    public string? Address { get; }
+
+    public Customer(string email, string firstName, string lastName)
+        : base(new CustomerId(Guid.NewGuid()))
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+
+        AddDomainEvent(new CustomerCreatedEvent(this));
+    }
+}
+```

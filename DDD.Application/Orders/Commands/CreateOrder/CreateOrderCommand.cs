@@ -17,11 +17,11 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Gui
 
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var customer = Order.Create(new CustomerId(request.CustomerId));
+        var order = new Order(new CustomerId(request.CustomerId));
 
-        _dbContext.Orders.Add(customer);
+        _dbContext.Orders.Add(order);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return customer.Id.Value;
+        return order.Id.Value;
     }
 }

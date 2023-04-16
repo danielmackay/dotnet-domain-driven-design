@@ -50,7 +50,7 @@ public class ApplicationDbContextInitializer
             return;
 
         var customerFaker = new Faker<Customer>()
-            .CustomInstantiator(f => Customer.Create(f.Person.Email, f.Person.FirstName, f.Person.LastName));
+            .CustomInstantiator(f => new Customer(f.Person.Email, f.Person.FirstName, f.Person.LastName));
 
         var customers = customerFaker.Generate(NumCustomers);
         _dbContext.Customers.AddRange(customers);
@@ -84,7 +84,7 @@ public class ApplicationDbContextInitializer
         var customerIds = _dbContext.Customers.Select(c => c.Id).ToList();
 
         var orderFaker = new Faker<Order>()
-            .CustomInstantiator(f => Order.Create(f.PickRandom(customerIds)));
+            .CustomInstantiator(f => new Order(f.PickRandom(customerIds)));
 
         var orders = orderFaker.Generate(NumOrders);
         _dbContext.Orders.AddRange(orders);

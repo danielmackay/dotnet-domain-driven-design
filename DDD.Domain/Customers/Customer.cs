@@ -2,31 +2,22 @@
 
 public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
-    public string Email { get; init; } = string.Empty;
+    public string Email { get; }
 
-    public string FirstName { get; init; } = string.Empty;
+    public string FirstName { get; }
 
-    public string LastName { get; init; } = string.Empty;
+    public string LastName { get; }
 
     // TODO: Turn this into a value object
-    public string Address { get; init; } = string.Empty;
+    public string? Address { get; }
 
-    private Customer() { }
-
-    public static Customer Create(string email, string firstName, string lastName)
+    public Customer(string email, string firstName, string lastName)
+        : base(new CustomerId(Guid.NewGuid()))
     {
-        var customer = new Customer()
-        {
-            Id = new CustomerId(Guid.NewGuid()),
-            Email = email,
-            FirstName = firstName,
-            LastName = lastName
-        };
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
 
-        customer.AddDomainEvent(new CustomerCreatedEvent(customer));
-
-        return customer;
+        AddDomainEvent(new CustomerCreatedEvent(this));
     }
 }
-
-public record CustomerId(Guid Value);
