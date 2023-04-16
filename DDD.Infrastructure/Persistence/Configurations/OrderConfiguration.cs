@@ -30,5 +30,7 @@ internal class OrderConfiguration : IEntityTypeConfiguration<Order>
             .WithOne()
             .HasForeignKey(li => li.OrderId)
             .IsRequired();
+
+        builder.OwnsOne(o => o.AmountPaid, MoneyConfiguration.BuildAction);
     }
 }

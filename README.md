@@ -103,3 +103,7 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
     }
 }
 ```
+
+### Use repositories to load aggregate roots
+
+Aggregate roots should be loaded via repositories. This allows us to load the aggregate root and all of its related entities in a single query.  If we were to load the aggregate root directly via the DbContext, we would need to load each related entity separately and introduce possible errors by not loading all of the related entities.

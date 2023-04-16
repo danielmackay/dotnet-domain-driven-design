@@ -17,7 +17,7 @@ public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, IEnum
     public async Task<IEnumerable<OrderDto>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.Orders
-            .Select(o => new OrderDto(o.Id.Value, new CustomerDto(o.CustomerId.Value, o.Customer!.FirstName, o.Customer.LastName), o.Total))
+            .Select(o => new OrderDto(o.Id.Value, new CustomerDto(o.CustomerId.Value, o.Customer!.FirstName, o.Customer.LastName), o.OrderTotal))
             .ToListAsync(cancellationToken);
     }
 }
