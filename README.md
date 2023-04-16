@@ -114,6 +114,14 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
 Aggregate roots should be loaded via repositories. This allows us to load the aggregate root and all of its related entities in a single query.  If we were to load the aggregate root directly via the DbContext, we would need to load each related entity separately and introduce possible errors by not loading all of the related entities.
 
+### DomainService interfaces will need to exist in Domain
+
+Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios we will need a DomainService interface in the Domain project, and an implementation in the Application or Infrastructure project.
+
+
+
+
+
 ## Thoughts
 
 - Once you start relying on aggregates being loaded as 'entity sets', they must be loaded as such.  While this is possible with EF, it is error-prone if you need to load the same aggregate in multiple places.  To get around this you need to use a repository to load the aggregate root and all of its related entities in a single query.
@@ -122,3 +130,5 @@ Aggregate roots should be loaded via repositories. This allows us to load the ag
 - Business logic and validation can now be easily unit tested in isolation via AggregateRoot tests.
 - DDD + CQRS is a heavy weight solution.  It gives us great control by ensuring entites are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
 - If you have a massive Aggregate root, but just need to update a simple property on one of the entities, you will need to load the whole aggregate root.  This could be a performance issue.
+- Some interfaces need to be pushed to the domain layer
+- IMHO the repository interface remains in the application, NOT the domain as this is a persistence concern.  The domain should not be concerned with persistence.
