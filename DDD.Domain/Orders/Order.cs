@@ -43,6 +43,8 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public LineItem AddLineItem(ProductId productId, Money price, int quantity)
     {
+        DomainException.ThrowIf(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
+
         var lineItem = LineItem.Create(Id, productId, price, quantity);
 
         var first = _lineItems.FirstOrDefault();
@@ -56,9 +58,18 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         return lineItem;
     }
 
+    public void RemoveLineItem(ProductId productId)
+    {
+        DomainException.ThrowIf(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
+
+        var lineItem = _lineItems.RemoveAll(x => x.ProductId == productId);
+    }
+
     public void AddPayment(Money payment)
     {
-        Guard.Against.NegativeOrZero(payment.Amount);
+        DomainException.ThrowIf(payment.Amount <= 0, "Payments can't be negative");
+        DomainException.ThrowIf(payment > OrderTotal - AmountPaid, "Payments can't be negative");
+
         Guard.Against.AgainstExpression(amount => amount > OrderTotal.Amount - AmountPaid.Amount, payment.Amount, "Payment can't exceed order total");
 
         AmountPaid += payment;

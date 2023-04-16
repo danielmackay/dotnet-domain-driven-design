@@ -4,6 +4,8 @@ public record Money(string Currency, decimal Amount) : IValueObject//, IComparab
 {
     public static Money Default => new("AUD", 0);
 
+    public static Money Zero => Default;
+
     //public int CompareTo(Money? other)
     //{
     //    return other == null ? 1 : (int)(Amount - other.Amount);

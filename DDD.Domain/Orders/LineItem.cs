@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Products;
+﻿using DDD.Domain.Common.Exceptions;
+using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 
@@ -24,7 +25,7 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
     // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money) be passed via the constructor
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
-        Guard.Against.NegativeOrZero(price.Amount);
+        DomainException.ThrowIf(price <= Money.Zero, "Cant add free products");
 
         var lineItem = new LineItem()
         {
@@ -41,7 +42,7 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     internal void RemoveQuantity(int quantity)
     {
-        Guard.Against.AgainstExpression(x => Quantity - quantity <= 0, quantity, "Can't remove all units.  Remove the entire item instead.");
+        DomainException.ThrowIf(Quantity - quantity <= 0, "Can't remove all units.  Remove the entire item instead.");
         Quantity -= quantity;
     }
 }
