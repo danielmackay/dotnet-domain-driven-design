@@ -15,12 +15,12 @@ public static class ProductEndpoints
             .WithOpenApi();
 
         group
-            .MapGet("/", (ISender sender, CancellationToken ct) => sender.Send(new GetAllProductsQuery(), ct))
+            .MapGet("/", async (ISender sender, CancellationToken ct) => await sender.Send(new GetAllProductsQuery(), ct))
             .WithName("GetProducts")
             .ProducesGet<ProductDto[]>();
 
         group
-            .MapPost("/", (ISender sender, CreateProductCommand command, CancellationToken ct) => sender.Send(command, ct))
+            .MapPost("/", async (ISender sender, CreateProductCommand command, CancellationToken ct) => await sender.Send(command, ct))
             .WithName("CreateProduct")
             .ProducesPost();
     }
