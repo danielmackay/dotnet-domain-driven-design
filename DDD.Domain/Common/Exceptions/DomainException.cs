@@ -16,4 +16,16 @@ public class DomainException : Exception
         : base(message, innerException)
     {
     }
+
+    public static void ThrowIf(bool condition)
+    {
+        if (condition)
+            throw new DomainException();
+    }
+
+    public static void ThrowIf(bool condition, string message)
+    {
+        if (condition)
+            throw new DomainException(message);
+    }
 }
