@@ -132,3 +132,4 @@ Sometimes entities will need to leverage a service to perform a behavior.  In th
 - If you have a massive Aggregate root, but just need to update a simple property on one of the entities, you will need to load the whole aggregate root.  This could be a performance issue.
 - Some interfaces need to be pushed to the domain layer
 - IMHO the repository interface remains in the application, NOT the domain as this is a persistence concern.  The domain should not be concerned with persistence.
+- IMHO we should not have separate domain entities and data models.  We can keep the domain entities as they are, but we can use EF to configure the persistence. This saves on a lot of double handling.
