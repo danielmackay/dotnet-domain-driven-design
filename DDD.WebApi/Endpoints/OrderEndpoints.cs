@@ -17,26 +17,26 @@ public static class OrderEndpoints
             .WithOpenApi();
 
         group
-            .MapGet("/", (ISender sender, CancellationToken ct) => sender.Send(new GetAllOrdersQuery(), ct))
+            .MapGet("/", async (ISender sender, CancellationToken ct) => await sender.Send(new GetAllOrdersQuery(), ct))
             .WithName("GetOrders")
             .ProducesGet<OrderDto[]>();
 
         group
-            .MapPost("/", (ISender sender, CreateOrderCommand command, CancellationToken ct) => sender.Send(command, ct))
+            .MapPost("/", async (ISender sender, CreateOrderCommand command, CancellationToken ct) => await sender.Send(command, ct))
             .WithName("CreateOrder")
             .ProducesPost();
 
         group
-            .MapPost("/{orderId:Guid}/lineitems", (ISender sender, Guid orderId, CreateLineItemCommand command, CancellationToken ct) =>
+            .MapPost("/{orderId:Guid}/lineitems", async (ISender sender, Guid orderId, CreateLineItemCommand command, CancellationToken ct) =>
             {
                 command.OrderId = orderId;
-                sender.Send(command, ct);
+                await sender.Send(command, ct);
             })
             .WithName("CreateOrderLineItem")
             .ProducesPost();
 
         group
-            .MapGet("/{orderId:Guid}/lineitems", (ISender sender, Guid orderId, CancellationToken ct) => sender.Send(new GetAllLineItemsQuery(orderId), ct))
+            .MapGet("/{orderId:Guid}/lineitems", async (ISender sender, Guid orderId, CancellationToken ct) => await sender.Send(new GetAllLineItemsQuery(orderId), ct))
             .WithName("GetOrderLineItems")
             .ProducesGet<LineItemDto[]>();
     }
