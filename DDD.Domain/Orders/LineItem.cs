@@ -15,6 +15,9 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     public int Quantity { get; private set; }
 
+
+    public Money Total => new(Price.Currency, Price.Amount * Quantity);
+
     // Internal so that only the Order can create a LineItem
     private LineItem() : base(new LineItemId(Guid.NewGuid())) { }
 
@@ -32,6 +35,14 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
         };
 
         return lineItem;
+    }
+
+    internal void AddQuantity(int quantity) => Quantity += quantity;
+
+    internal void RemoveQuantity(int quantity)
+    {
+        Guard.Against.AgainstExpression(x => Quantity - quantity <= 0, quantity, "Can't remove all units.  Remove the entire item instead.");
+        Quantity -= quantity;
     }
 }
 

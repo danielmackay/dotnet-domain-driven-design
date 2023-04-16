@@ -69,4 +69,10 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
             AddDomainEvent(new OrderReadyForShippingEvent(this));
         }
     }
+
+    public void AddQuantity(ProductId productId, int quantity) =>
+        _lineItems.FirstOrDefault(li => li.ProductId == productId)?.AddQuantity(quantity);
+
+    public void RemoveQuantity(ProductId productId, int quantity) =>
+        _lineItems.FirstOrDefault(li => li.ProductId == productId)?.RemoveQuantity(quantity);
 }

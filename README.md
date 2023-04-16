@@ -121,3 +121,4 @@ Aggregate roots should be loaded via repositories. This allows us to load the ag
 - Can't pass owned entities to constructors, so will need to use factory methods for those.
 - Business logic and validation can now be easily unit tested in isolation via AggregateRoot tests.
 - DDD + CQRS is a heavy weight solution.  It gives us great control by ensuring entites are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
+- If you have a massive Aggregate root, but just need to update a simple property on one of the entities, you will need to load the whole aggregate root.  This could be a performance issue.
