@@ -33,5 +33,13 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
         return lineItem;
     }
+
+    internal void AddQuantity(int quantity) => Quantity += quantity;
+
+    internal void RemoveQuantity(int quantity)
+    {
+        Guard.Against.AgainstExpression(x => Quantity - quantity <= 0, quantity, "Can't remove all units.  Remove the entire item instead.");
+        Quantity -= quantity;
+    }
 }
 
