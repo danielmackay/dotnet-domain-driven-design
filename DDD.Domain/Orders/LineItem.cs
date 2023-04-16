@@ -15,6 +15,7 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     public int Quantity { get; private set; }
 
+
     public Money Total => new(Price.Currency, Price.Amount * Quantity);
 
     // Internal so that only the Order can create a LineItem
