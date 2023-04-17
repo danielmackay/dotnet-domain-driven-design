@@ -1,5 +1,6 @@
 ﻿using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Products;
+using System.Xml;
 
 namespace DDD.Domain.Orders;
 
@@ -26,13 +27,14 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
         DomainException.ThrowIf(price <= Money.Zero, "Cant add free products");
+        DomainException.ThrowIf(quantity <= 0, "Quantity can't be negative");
 
         var lineItem = new LineItem()
         {
             OrderId = orderId,
             ProductId = productId,
             Price = price,
-            Quantity = Guard.Against.NegativeOrZero(quantity)
+            Quantity = quantity
         };
 
         return lineItem;

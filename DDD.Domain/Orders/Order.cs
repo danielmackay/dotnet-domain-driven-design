@@ -71,9 +71,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
     public void AddPayment(Money payment)
     {
         DomainException.ThrowIf(payment.Amount <= 0, "Payments can't be negative");
-        DomainException.ThrowIf(payment > OrderTotal - AmountPaid, "Payments can't be negative");
-
-        Guard.Against.AgainstExpression(amount => amount > OrderTotal.Amount - AmountPaid.Amount, payment.Amount, "Payment can't exceed order total");
+        DomainException.ThrowIf(payment > OrderTotal - AmountPaid, "Payment can't exceed order total");
 
         AmountPaid += payment;
 
