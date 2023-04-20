@@ -1,5 +1,4 @@
 ﻿using DDD.Application.Common.Exceptions;
-using DDD.Domain.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace DDD.WebApi.Filters;
