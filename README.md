@@ -10,6 +10,7 @@
 - CQRS Commands & Queries
 - Fluent Validation
 - Minimal APIs
+- Specifications
 
 ## DDD Principles
 
@@ -22,7 +23,7 @@
 
 ### Entities
 
-- Use Entities for objects that are part of an aggregate root and distinguisable by ID (usually a separate table)
+- Use Entities for objects that are part of an aggregate root and distinguishable by ID (usually a separate table)
 - Entities cannot be modified outside of their aggregate root
 - Not exposed via DbContext
 - Will have a table in the DB
@@ -31,7 +32,7 @@
 
 ### Value Objects
 
-- Use ValueObjects for objects that are defined by their properties (i.e. not by ID) (usually part of an another table)
+- Use ValueObjects for objects that are defined by their properties (i.e. not by ID) (usually part of another table)
 - Value objects can only be modified as part of their aggregate root
 - Will be part of the AggregateRoot table in the DB
 - Configured in EF via `builder.OwnsOne()`
@@ -110,25 +111,21 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 }
 ```
 
-### Use repositories to load aggregate roots
+### Use Specifications to load aggregate roots
 
-Aggregate roots should be loaded via repositories. This allows us to load the aggregate root and all of its related entities in a single query.  If we were to load the aggregate root directly via the DbContext, we would need to load each related entity separately and introduce possible errors by not loading all of the related entities.
+Aggregate roots need to be loaded in their entirety.  This means the root entities and all child entities that make up the aggregate root.  To achieve this we will use specifications so that we can consistently load the aggregate root and all of its related entities in a single query.
 
 ### DomainService interfaces will need to exist in Domain
 
-Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios we will need a DomainService interface in the Domain project, and an implementation in the Application or Infrastructure project.
-
-
-
-
+Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios, we will need a DomainService interface in the Domain project, and implementation in the Application or Infrastructure project.
 
 ## Thoughts
 
 - Once you start relying on aggregates being loaded as 'entity sets', they must be loaded as such.  While this is possible with EF, it is error-prone if you need to load the same aggregate in multiple places.  To get around this you need to use a repository to load the aggregate root and all of its related entities in a single query.
-- Initially I thought we could use repositories for commands, and then use the DbContext directly for queries, but if you're queries rely on any computed properies that rely on the whole aggregate this isn't possible.  Could get around this though, by not using computed properies and instead storing the computed value in the DB.
+- Initially, I thought we could use repositories for commands, and then use the DbContext directly for queries, but if your queries rely on any computed properties that rely on the whole aggregate this isn't possible.  Could get around this though, by not using computed properties and instead storing the computed value in the DB.
 - Can't pass owned entities to constructors, so will need to use factory methods for those.
 - Business logic and validation can now be easily unit tested in isolation via AggregateRoot tests.
-- DDD + CQRS is a heavy weight solution.  It gives us great control by ensuring entites are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
+- DDD + CQRS is a heavy-weight solution.  It gives us great control by ensuring entities are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
 - If you have a massive Aggregate root, but just need to update a simple property on one of the entities, you will need to load the whole aggregate root.  This could be a performance issue.
 - Some interfaces need to be pushed to the domain layer
 - IMHO the repository interface remains in the application, NOT the domain as this is a persistence concern.  The domain should not be concerned with persistence.
