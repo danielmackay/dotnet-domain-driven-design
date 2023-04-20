@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Exceptions;
-using DDD.Domain.Products;
-using System.Xml;
+﻿using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 

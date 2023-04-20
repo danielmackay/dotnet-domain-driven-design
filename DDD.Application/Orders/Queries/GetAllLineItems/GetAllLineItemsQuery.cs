@@ -23,7 +23,7 @@ public class GetAllLineItemsQueryHandler : IRequestHandler<GetAllLineItemsQuery,
             .SelectMany(o => o.LineItems)
             .Select(li => new LineItemDto(
                 li.Id.Value,
-                new ProductDto(li.ProductId.Value, li.Product.Name, li.Product.Sku.Value),
+                new ProductDto(li.ProductId.Value, li.Product!.Name, li.Product.Sku.Value),
                 new MoneyDto(li.Price.Currency, li.Price.Amount)))
             .ToListAsync(cancellationToken);
     }

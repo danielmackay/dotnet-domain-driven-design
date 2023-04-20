@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Common.Exceptions;
-using DDD.Domain.Customers;
+﻿using DDD.Domain.Customers;
 using DDD.Domain.DomainServices;
 using DDD.Domain.Products;
 
