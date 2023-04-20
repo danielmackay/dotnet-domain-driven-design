@@ -1,5 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
-using DDD.Domain.Orders;
+﻿using DDD.Domain.Orders;
 using DDD.Domain.Products;
 using System.Text.Json.Serialization;
 
@@ -23,16 +22,21 @@ public class CreateLineItemCommandHandler : IRequestHandler<CreateLineItemComman
     public async Task<Guid> Handle(CreateLineItemCommand request, CancellationToken cancellationToken)
     {
         var productId = new ProductId(request.ProductId);
-        var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
-        ArgumentNullException.ThrowIfNull(product);
+        var productSpec = new ProductByIdSpec(productId);
+        var product = await _dbContext.Products
+            .WithSpecification(productSpec)
+            .FirstOrDefaultAsync(cancellationToken)
+            ?? throw new NotFoundException();
 
         var orderId = new OrderId(request.OrderId);
-        var order = _dbContext.Orders.FirstOrDefault(o => o.Id == orderId);
-        ArgumentNullException.ThrowIfNull(order);
+        var orderSpec = new OrderByIdSpec(orderId);
+        var order = await _dbContext.Orders
+            .WithSpecification(orderSpec)
+            .FirstOrDefaultAsync(cancellationToken)
+            ?? throw new NotFoundException();
 
         var lineItem = order.AddLineItem(productId, product.Price, request.Quantity);
 
-        //_dbContext.LineItems.Add(customer);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return lineItem.Id.Value;

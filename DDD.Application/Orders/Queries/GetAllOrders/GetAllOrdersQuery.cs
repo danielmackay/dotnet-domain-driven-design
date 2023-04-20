@@ -1,5 +1,4 @@
-using DDD.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using DDD.Domain.Orders;
 
 namespace DDD.Application.Orders.Queries.GetAllOrders;
 
@@ -17,6 +16,7 @@ public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, IEnum
     public async Task<IEnumerable<OrderDto>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.Orders
+            .WithSpecification(new OrderSpec())
             .Select(o => new OrderDto(o.Id.Value, new CustomerDto(o.CustomerId.Value, o.Customer!.FirstName, o.Customer.LastName), o.OrderTotal))
             .ToListAsync(cancellationToken);
     }
