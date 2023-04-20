@@ -1,5 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
-using DDD.Domain.Common;
+﻿using DDD.Domain.Common;
 using DDD.Domain.Products;
 
 namespace DDD.Application.Products.Commands.CreateProduct;

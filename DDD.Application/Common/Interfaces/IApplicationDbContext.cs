@@ -1,7 +1,6 @@
 ﻿using DDD.Domain.Customers;
 using DDD.Domain.Orders;
 using DDD.Domain.Products;
-using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Application.Common.Interfaces;
 

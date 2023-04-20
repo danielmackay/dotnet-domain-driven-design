@@ -1,6 +1,4 @@
-using DDD.Application.Common.Interfaces;
 using DDD.Domain.Orders;
-using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Application.Orders.Queries.GetAllLineItems;
 

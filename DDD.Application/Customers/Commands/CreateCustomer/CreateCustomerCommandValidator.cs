@@ -1,7 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace DDD.Application.Customers.Commands.CreateCustomer;
+﻿namespace DDD.Application.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {

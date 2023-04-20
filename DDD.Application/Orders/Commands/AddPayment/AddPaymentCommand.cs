@@ -1,8 +1,5 @@
-﻿using DDD.Application.Common.Exceptions;
-using DDD.Application.Common.Interfaces;
-using DDD.Domain.Common;
+﻿using DDD.Domain.Common;
 using DDD.Domain.Orders;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace DDD.Application.Orders.Commands.AddPayment;

@@ -1,9 +1,9 @@
+using DDD.Application;
 using DDD.Infrastructure;
 using DDD.Infrastructure.Persistence;
 using DDD.WebApi;
-using DDD.Application;
-using DDD.WebApi.Filters;
 using DDD.WebApi.Endpoints;
+using DDD.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace DDD.Application.Common.Behaviours;
