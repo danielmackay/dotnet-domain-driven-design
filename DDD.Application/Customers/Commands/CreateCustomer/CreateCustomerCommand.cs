@@ -1,5 +1,4 @@
-﻿using DDD.Application.Common.Interfaces;
-using DDD.Domain.Customers;
+﻿using DDD.Domain.Customers;
 
 namespace DDD.Application.Customers.Commands.CreateCustomer;
 

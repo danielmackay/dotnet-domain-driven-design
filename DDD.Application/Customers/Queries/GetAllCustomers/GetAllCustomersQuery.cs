@@ -1,6 +1,3 @@
-using DDD.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
 namespace DDD.Application.Customers.Queries.GetAllCustomers;
 
 public record GetAllCustomersQuery : IRequest<IEnumerable<CustomerDto>>;

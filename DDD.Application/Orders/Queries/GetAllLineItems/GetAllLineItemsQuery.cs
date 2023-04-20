@@ -1,6 +1,4 @@
-using DDD.Application.Common.Interfaces;
 using DDD.Domain.Orders;
-using Microsoft.EntityFrameworkCore;
 
 namespace DDD.Application.Orders.Queries.GetAllLineItems;
 
@@ -18,8 +16,9 @@ public class GetAllLineItemsQueryHandler : IRequestHandler<GetAllLineItemsQuery,
     public async Task<IEnumerable<LineItemDto>> Handle(GetAllLineItemsQuery request, CancellationToken cancellationToken)
     {
         var orderId = new OrderId(request.OrderId);
+        var spec = new OrderByIdSpec(orderId);
         return await _dbContext.Orders
-            .Where(o => o.Id == orderId)
+            .WithSpecification(spec)
             .SelectMany(o => o.LineItems)
             .Select(li => new LineItemDto(
                 li.Id.Value,

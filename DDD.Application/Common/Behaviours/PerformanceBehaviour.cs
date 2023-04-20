@@ -1,6 +1,5 @@
-﻿using System.Diagnostics;
-using DDD.Application.Common.Interfaces;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace DDD.Application.Common.Behaviours;
 

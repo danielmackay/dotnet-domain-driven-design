@@ -40,6 +40,8 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         CustomerId = customerId;
         AmountPaid = Money.Default;
         Status = OrderStatus.PendingPayment;
+
+        // NOTE: this is currently firing an event every time an order is loading from the DB 😢
         AddDomainEvent(new OrderCreatedEvent(this));
     }
 
