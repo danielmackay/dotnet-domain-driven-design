@@ -13,12 +13,13 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
     // TODO: Turn this into a value object
     public string? Address { get; private set; }
 
-    private Customer() : base(new CustomerId(Guid.NewGuid())) { }
+    private Customer() { }
 
     public static Customer Create(string email, string firstName, string lastName)
     {
         var customer = new Customer()
         {
+            Id = new CustomerId(Guid.NewGuid()),
             Email = email,
             FirstName = firstName,
             LastName = lastName

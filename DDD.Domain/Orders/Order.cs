@@ -35,12 +35,13 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         }
     }
 
-    private Order() : base(new OrderId(Guid.NewGuid())) { }
+    private Order() { }
 
     public static Order Create(CustomerId customerId)
     {
         var order = new Order()
         {
+            Id = new OrderId(Guid.NewGuid()),
             CustomerId = customerId,
             AmountPaid = Money.Default,
             Status = OrderStatus.PendingPayment
