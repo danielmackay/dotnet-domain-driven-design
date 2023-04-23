@@ -15,13 +15,12 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     public int Quantity { get; private set; }
 
-
     public Money Total => new(Price.Currency, Price.Amount * Quantity);
 
-    // Internal so that only the Order can create a LineItem
-    private LineItem() : base(new LineItemId(Guid.NewGuid())) { }
+    private LineItem() { }
 
     // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money) be passed via the constructor
+    // Internal so that only the Order can create a LineItem
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
         DomainException.ThrowIf(price <= Money.Zero, "Cant add free products");
@@ -29,6 +28,7 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
         var lineItem = new LineItem()
         {
+            Id = new LineItemId(Guid.NewGuid()),
             OrderId = orderId,
             ProductId = productId,
             Price = price,

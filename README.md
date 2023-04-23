@@ -52,7 +52,7 @@
 
 Constructors are preferred as they are simpler and allow properties to be defined easier.
 
-However, EF does not allow owned entities to be passed to constructors, so we will need to revert to factory methods in that case.
+However, EF does not allow owned entities to be passed to constructors, so we will need to revert to factory methods in that case.  Also, factories need to be used when raising creation domain events, so that events aren't raised when EF fetches entities from the DB.
 
 Factory Methods:
 
@@ -118,6 +118,12 @@ Aggregate roots need to be loaded in their entirety.  This means the root entiti
 ### DomainService interfaces will need to exist in Domain
 
 Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios, we will need a DomainService interface in the Domain project, and implementation in the Application or Infrastructure project.
+
+### Object Construction Constraints
+
+- Objects must be constructed with a factory pattern so that domain events can be raised upon explicit creation, but NOT raised when EF fetches entities from the DB.
+- Properties need to be passed to constructors to ensure they are in a valid state on object creation.  Can't use `required init` properties as they then become unmodifiable.
+- EF does not allow owned entities to be passed to constructors, so these MUST be set via factory methods.
 
 ## Thoughts
 

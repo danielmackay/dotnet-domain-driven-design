@@ -1,20 +1,23 @@
-﻿namespace DDD.Domain.Products;
+﻿using DDD.Domain.Common.Extensions;
+
+namespace DDD.Domain.Products;
 
 public class Product : BaseEntity<ProductId>, IAggregateRoot
 {
-    public required string Name { get; init; }
+    public string Name { get; private set; } = null!;
 
-    public required Money Price { get; init; }
+    public Money Price { get; private set; } = null!;
 
-    public required Sku Sku { get; init; }
+    public Sku Sku { get; private set; } = null!;
 
-    private Product() : base(new ProductId(Guid.NewGuid())) { }
+    private Product() { }
 
     // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money & Sku) be passed via the constructor
     public static Product Create(string name, Money price, Sku sku)
     {
         var product = new Product
         {
+            Id = new ProductId(Guid.NewGuid()),
             Name = name,
             Price = price,
             Sku = sku
@@ -23,5 +26,22 @@ public class Product : BaseEntity<ProductId>, IAggregateRoot
         product.AddDomainEvent(new ProductCreatedEvent(product));
 
         return product;
+    }
+
+    public void UpdateName(string name)
+    {
+        DomainException.ThrowIf(name.IsEmpty(), "Name cannot be empty");
+        Name = name;
+    }
+
+    public void UpdatePrice(Money price)
+    {
+        DomainException.ThrowIf(price.Amount <= 0, "Price must be positive");
+        Price = price;
+    }
+
+    public void UpdateSku(Sku sku)
+    {
+        Sku = sku;
     }
 }

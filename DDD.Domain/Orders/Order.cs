@@ -10,11 +10,12 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public IEnumerable<LineItem> LineItems => _lineItems.ToList();
 
-    public CustomerId CustomerId { get; }
+    public required CustomerId CustomerId { get; init; }
 
     public Customer? Customer { get; set; }
 
-    public Money AmountPaid { get; private set; }
+    // TODO: Check FE overrides this
+    public Money AmountPaid { get; private set; } = null!;
 
     public OrderStatus Status { get; private set; }
 
@@ -34,15 +35,21 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         }
     }
 
-    public Order(CustomerId customerId)
-        : base(new OrderId(Guid.NewGuid()))
-    {
-        CustomerId = customerId;
-        AmountPaid = Money.Default;
-        Status = OrderStatus.PendingPayment;
+    private Order() { }
 
-        // NOTE: this is currently firing an event every time an order is loading from the DB 😢
-        AddDomainEvent(new OrderCreatedEvent(this));
+    public static Order Create(CustomerId customerId)
+    {
+        var order = new Order()
+        {
+            Id = new OrderId(Guid.NewGuid()),
+            CustomerId = customerId,
+            AmountPaid = Money.Default,
+            Status = OrderStatus.PendingPayment
+        };
+
+        order.AddDomainEvent(new OrderCreatedEvent(order));
+
+        return order;
     }
 
     public LineItem AddLineItem(ProductId productId, Money price, int quantity)

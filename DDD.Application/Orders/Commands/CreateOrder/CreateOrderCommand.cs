@@ -16,7 +16,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Gui
 
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = new Order(new CustomerId(request.CustomerId));
+        var order = Order.Create(new CustomerId(request.CustomerId));
 
         _dbContext.Orders.Add(order);
         await _dbContext.SaveChangesAsync(cancellationToken);
