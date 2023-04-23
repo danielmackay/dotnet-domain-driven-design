@@ -15,7 +15,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
     public Customer? Customer { get; set; }
 
     // TODO: Check FE overrides this
-    public Money AmountPaid { get; private set; } = Money.Default;
+    public Money AmountPaid { get; private set; } = null!;
 
     public OrderStatus Status { get; private set; }
 

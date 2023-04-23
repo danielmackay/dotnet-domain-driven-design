@@ -1,24 +1,39 @@
-﻿namespace DDD.Domain.Customers;
+﻿using DDD.Domain.Common.Extensions;
+
+namespace DDD.Domain.Customers;
 
 public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
-    public string Email { get; }
+    public string Email { get; private set; } = null!;
 
-    public string FirstName { get; }
+    public string FirstName { get; private set; } = null!;
 
-    public string LastName { get; }
+    public string LastName { get; private set; } = null!;
 
     // TODO: Turn this into a value object
     public string? Address { get; private set; }
 
-    public Customer(string email, string firstName, string lastName)
-        : base(new CustomerId(Guid.NewGuid()))
+    private Customer() : base(new CustomerId(Guid.NewGuid())) { }
+
+    public static Customer Create(string email, string firstName, string lastName)
     {
-        Email = email;
+        var customer = new Customer()
+        {
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName
+        };
+        customer.AddDomainEvent(new CustomerCreatedEvent(customer));
+        return customer;
+    }
+
+    public void UpdateName(string firstName, string lastName)
+    {
+        DomainException.ThrowIf(firstName.IsEmpty(), $"{nameof(firstName)} cannot be empty");
+        DomainException.ThrowIf(lastName.IsEmpty(), $"{nameof(lastName)} cannot be empty");
+
         FirstName = firstName;
         LastName = lastName;
-
-        AddDomainEvent(new CustomerCreatedEvent(this));
     }
 
     public void UpdateAddress(string address) => Address = address;
