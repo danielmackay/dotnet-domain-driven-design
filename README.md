@@ -52,7 +52,7 @@
 
 Constructors are preferred as they are simpler and allow properties to be defined easier.
 
-However, EF does not allow owned entities to be passed to constructors, so we will need to revert to factory methods in that case.
+However, EF does not allow owned entities to be passed to constructors, so we will need to revert to factory methods in that case.  Also, factories need to be used when raising creation domain events, so that events aren't raised when EF fetches entities from the DB.
 
 Factory Methods:
 
