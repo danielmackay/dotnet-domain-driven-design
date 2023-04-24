@@ -1,5 +1,7 @@
 # dotnet-ef-domain-driven-design
 
+[![.NET](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml/badge.svg)](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml)
+
 ## Features
 
 - Aggregate Roots
