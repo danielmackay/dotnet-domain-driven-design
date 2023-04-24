@@ -1,4 +1,7 @@
-﻿namespace DDD.Domain.Common.Exceptions;
+﻿using DDD.Domain.Common.Extensions;
+using System.Runtime.CompilerServices;
+
+namespace DDD.Domain.Common.Exceptions;
 
 public class DomainException : Exception
 {
@@ -27,5 +30,11 @@ public class DomainException : Exception
     {
         if (condition)
             throw new DomainException(message);
+    }
+
+    public static void ThrowIfEmpty(string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
+    {
+        if (value.IsEmpty())
+            throw new DomainException($"{paramName} cannot be empty");
     }
 }
