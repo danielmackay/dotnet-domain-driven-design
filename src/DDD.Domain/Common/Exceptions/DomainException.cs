@@ -37,4 +37,16 @@ public class DomainException : Exception
         if (value.IsEmpty())
             throw new DomainException($"{paramName} cannot be empty");
     }
+
+    public static void ThrowIfNegative(decimal value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
+    {
+        if (value <= 0)
+            throw new DomainException($"{paramName} cannot be negative");
+    }
+
+    public static void ThrowIfNull<T>(T value, [CallerArgumentExpression(nameof(value))] string? paramName = null) where T : class
+    {
+        if (value is null)
+            throw new DomainException($"{paramName} cannot be null");
+    }
 }

@@ -127,6 +127,11 @@ Sometimes entities will need to leverage a service to perform a behavior.  In th
 - EF does not allow owned entities to be passed to constructors, so these MUST be set via factory methods.
 - Can remove nullable warnings by using `null!`.  This is safe to do so as we can only create an object via our factory method which we know sets these properties.
 
+### Unit Test Naming Conventions
+
+// Test Naming Convention: MethodName_StateUnderTest_ExpectedBehavior
+// [Method/PropertyName]_Should_[ExpectedBehavior]_When_[StateUnderTest]
+
 ## Thoughts
 
 - Once you start relying on aggregates being loaded as 'entity sets', they must be loaded as such.  While this is possible with EF, it is error-prone if you need to load the same aggregate in multiple places.  To get around this you need to use a repository to load the aggregate root and all of its related entities in a single query.

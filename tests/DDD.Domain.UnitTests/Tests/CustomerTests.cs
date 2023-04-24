@@ -3,10 +3,7 @@ using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Customers;
 using FluentAssertions;
 
-namespace DDD.Domain.UnitTests;
-
-// Test Naming Convention: MethodName_StateUnderTest_ExpectedBehavior
-// [Method/PropertyName]_Should_[ExpectedBehavior]_When_[StateUnderTest]
+namespace DDD.Domain.UnitTests.Tests;
 
 public class CustomerTests
 {
@@ -16,9 +13,9 @@ public class CustomerTests
     public void Create_Should_Succeed_When_Customer_Is_Valid()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
 
         // Act
         var customer = Customer.Create(email, firstName, lastName);
@@ -35,9 +32,9 @@ public class CustomerTests
     public void Create_Should_Throw_When_Email_Is_Empty()
     {
         // Arrange
-        string email = string.Empty;
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = string.Empty;
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
 
         // Act
         Action act = () => Customer.Create(email, firstName, lastName);
@@ -50,9 +47,9 @@ public class CustomerTests
     public void Create_Should_Throw_When_FirstName_Is_Empty()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = string.Empty;
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = string.Empty;
+        var lastName = _faker.Name.LastName();
 
         // Act
         Action act = () => Customer.Create(email, firstName, lastName);
@@ -65,9 +62,9 @@ public class CustomerTests
     public void Create_Should_Throw_When_LastName_Is_Empty()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = string.Empty;
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = string.Empty;
 
         // Act
         Action act = () => Customer.Create(email, firstName, lastName);
@@ -80,12 +77,12 @@ public class CustomerTests
     public void UpdateName_Should_Succeed_When_Customer_Is_Valid()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        string newFirstName = _faker.Name.FirstName();
-        string newLastName = _faker.Name.LastName();
+        var newFirstName = _faker.Name.FirstName();
+        var newLastName = _faker.Name.LastName();
 
         // Act
         customer.UpdateName(newFirstName, newLastName);
@@ -99,12 +96,12 @@ public class CustomerTests
     public void UpdateName_Should_Throw_When_FirstName_Is_Empty()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        string newFirstName = string.Empty;
-        string newLastName = _faker.Name.LastName();
+        var newFirstName = string.Empty;
+        var newLastName = _faker.Name.LastName();
 
         // Act
         Action act = () => customer.UpdateName(newFirstName, newLastName);
@@ -117,12 +114,12 @@ public class CustomerTests
     public void UpdateName_Should_Throw_When_LastName_Is_Empty()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        string newFirstName = _faker.Name.FirstName();
-        string newLastName = string.Empty;
+        var newFirstName = _faker.Name.FirstName();
+        var newLastName = string.Empty;
 
         // Act
         Action act = () => customer.UpdateName(newFirstName, newLastName);
@@ -135,11 +132,11 @@ public class CustomerTests
     public void UpdateAddress_Should_Succeed_When_Customer_Is_Valid()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        string address = _faker.Address.StreetAddress();
+        var address = _faker.Address.StreetAddress();
 
         // Act
         customer.UpdateAddress(address);
@@ -152,11 +149,11 @@ public class CustomerTests
     public void UpdateAddress_Should_Throw_When_Address_Is_Empty()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        string address = string.Empty;
+        var address = string.Empty;
 
         // Act
         Action act = () => customer.UpdateAddress(address);
@@ -169,9 +166,9 @@ public class CustomerTests
     public void Create_Should_Add_Domain_Event_When_Customer_Is_Valid()
     {
         // Arrange
-        string email = _faker.Internet.Email();
-        string firstName = _faker.Name.FirstName();
-        string lastName = _faker.Name.LastName();
+        var email = _faker.Internet.Email();
+        var firstName = _faker.Name.FirstName();
+        var lastName = _faker.Name.LastName();
 
         // Act
         var customer = Customer.Create(email, firstName, lastName);
