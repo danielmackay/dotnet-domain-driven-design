@@ -23,8 +23,8 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
     // Internal so that only the Order can create a LineItem
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
-        DomainException.ThrowIf(price <= Money.Zero, "Cant add free products");
-        DomainException.ThrowIf(quantity <= 0, "Quantity can't be negative");
+        DomainException.ThrowIfNegative(price.Amount);
+        DomainException.ThrowIfNegative(quantity);
 
         var lineItem = new LineItem()
         {

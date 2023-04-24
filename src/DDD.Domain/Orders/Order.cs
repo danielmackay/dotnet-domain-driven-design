@@ -81,7 +81,11 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         DomainException.ThrowIf(payment.Amount <= 0, "Payments can't be negative");
         DomainException.ThrowIf(payment > OrderTotal - AmountPaid, "Payment can't exceed order total");
 
-        AmountPaid += payment;
+        // Ensure currency is set on first payment
+        if (AmountPaid.Amount == 0)
+            AmountPaid = payment;
+        else
+            AmountPaid += payment;
 
         if (AmountPaid >= OrderTotal)
         {
