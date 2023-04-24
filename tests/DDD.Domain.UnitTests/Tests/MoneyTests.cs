@@ -1,5 +1,4 @@
 ﻿using DDD.Domain.Common;
-using FluentAssertions;
 
 namespace DDD.Domain.UnitTests.Tests;
 

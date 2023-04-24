@@ -131,7 +131,7 @@ public class OrderTests
         var order = Order.Create(customerId);
         var price = _moneyFaker.Generate();
         var quantity = 1;
-        var lineItem = order.AddLineItem(productId, price, quantity);
+        order.AddLineItem(productId, price, quantity);
         // Act
         order.RemoveLineItem(productId);
         // Assert

@@ -1,9 +1,7 @@
-﻿using Bogus;
-using DDD.Domain.Common;
+﻿using DDD.Domain.Common;
 using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Products;
 using DDD.Domain.UnitTests.Fakers;
-using FluentAssertions;
 
 namespace DDD.Domain.UnitTests.Tests;
 
@@ -65,7 +63,7 @@ public class ProductTests
         Money? price = null;
         var sku = _skuFaker.Generate();
         // Act
-        Action act = () => Product.Create(name, price, sku);
+        Action act = () => Product.Create(name, price!, sku);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("price cannot be null");
     }
@@ -78,7 +76,7 @@ public class ProductTests
         var price = _moneyFaker.Generate();
         Sku? sku = null;
         // Act
-        Action act = () => Product.Create(name, price, sku);
+        Action act = () => Product.Create(name, price, sku!);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("sku cannot be null");
     }
@@ -102,7 +100,7 @@ public class ProductTests
         var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
         Money? newPrice = null;
         // Act
-        Action act = () => product.UpdatePrice(newPrice);
+        Action act = () => product.UpdatePrice(newPrice!);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("price cannot be null");
     }
@@ -150,7 +148,7 @@ public class ProductTests
         var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
         Sku? newSku = null;
         // Act
-        Action act = () => product.UpdateSku(newSku);
+        Action act = () => product.UpdateSku(newSku!);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("sku cannot be null");
     }

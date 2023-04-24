@@ -1,5 +1,4 @@
-﻿using Bogus;
-using DDD.Domain.Products;
+﻿using DDD.Domain.Products;
 
 namespace DDD.Domain.UnitTests.Fakers;
 

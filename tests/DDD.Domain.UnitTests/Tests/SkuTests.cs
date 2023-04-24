@@ -11,7 +11,7 @@ public class SkuTests
         // Arrange
         var value = null as string;
         // Act
-        var result = Sku.Create(value);
+        var result = Sku.Create(value!);
         // Assert
         result.Should().BeNull();
     }

@@ -1,7 +1,5 @@
-using Bogus;
 using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Customers;
-using FluentAssertions;
 
 namespace DDD.Domain.UnitTests.Tests;
 
