@@ -1,5 +1,7 @@
 # dotnet-ef-domain-driven-design
 
+[![.NET](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml/badge.svg)](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml)
+
 ## Features
 
 - Aggregate Roots
@@ -19,12 +21,13 @@
 - Use AggregateRoots for objects that can be created directly
 - All user interactions should go via AggregateRoots
 - Exposed via DbContext
-- Will have a table in the DB
+- Will have a table in t
+- Aggregates can only be pulled in their entirety from the DB.  This means that all child entities that make up the aggregate root will also be pulled in
 
 ### Entities
 
 - Use Entities for objects that are part of an aggregate root and distinguishable by ID (usually a separate table)
-- Entities cannot be modified outside of their aggregate root
+- Entities **cannot be modified outside** of their aggregate root
 - Not exposed via DbContext
 - Will have a table in the DB
 - Internal factory method for creation so that can only be created via aggregate roots
@@ -124,6 +127,12 @@ Sometimes entities will need to leverage a service to perform a behavior.  In th
 - Objects must be constructed with a factory pattern so that domain events can be raised upon explicit creation, but NOT raised when EF fetches entities from the DB.
 - Properties need to be passed to constructors to ensure they are in a valid state on object creation.  Can't use `required init` properties as they then become unmodifiable.
 - EF does not allow owned entities to be passed to constructors, so these MUST be set via factory methods.
+- Can remove nullable warnings by using `null!`.  This is safe to do so as we can only create an object via our factory method which we know sets these properties.
+
+### Unit Test Naming Conventions
+
+// Test Naming Convention: MethodName_StateUnderTest_ExpectedBehavior
+// [Method/PropertyName]_Should_[ExpectedBehavior]_When_[StateUnderTest]
 
 ## Thoughts
 

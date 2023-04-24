@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Extensions;
-
-namespace DDD.Domain.Customers;
+﻿namespace DDD.Domain.Customers;
 
 public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 {
@@ -17,6 +15,10 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     public static Customer Create(string email, string firstName, string lastName)
     {
+        DomainException.ThrowIfEmpty(email);
+        DomainException.ThrowIfEmpty(firstName);
+        DomainException.ThrowIfEmpty(lastName);
+
         var customer = new Customer()
         {
             Id = new CustomerId(Guid.NewGuid()),
@@ -30,12 +32,17 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     public void UpdateName(string firstName, string lastName)
     {
-        DomainException.ThrowIf(firstName.IsEmpty(), $"{nameof(firstName)} cannot be empty");
-        DomainException.ThrowIf(lastName.IsEmpty(), $"{nameof(lastName)} cannot be empty");
+        DomainException.ThrowIfEmpty(firstName);
+        DomainException.ThrowIfEmpty(lastName);
 
         FirstName = firstName;
         LastName = lastName;
     }
 
-    public void UpdateAddress(string address) => Address = address;
+    public void UpdateAddress(string address)
+    {
+        DomainException.ThrowIfEmpty(address);
+
+        Address = address;
+    }
 }

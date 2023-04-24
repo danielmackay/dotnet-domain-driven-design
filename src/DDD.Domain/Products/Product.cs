@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Extensions;
-
-namespace DDD.Domain.Products;
+﻿namespace DDD.Domain.Products;
 
 public class Product : BaseEntity<ProductId>, IAggregateRoot
 {
@@ -15,6 +13,11 @@ public class Product : BaseEntity<ProductId>, IAggregateRoot
     // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money & Sku) be passed via the constructor
     public static Product Create(string name, Money price, Sku sku)
     {
+        DomainException.ThrowIfEmpty(name);
+        DomainException.ThrowIfNull(sku);
+        DomainException.ThrowIfNull(price);
+        DomainException.ThrowIfNegative(price.Amount);
+
         var product = new Product
         {
             Id = new ProductId(Guid.NewGuid()),
@@ -30,18 +33,20 @@ public class Product : BaseEntity<ProductId>, IAggregateRoot
 
     public void UpdateName(string name)
     {
-        DomainException.ThrowIf(name.IsEmpty(), "Name cannot be empty");
+        DomainException.ThrowIfEmpty(name);
         Name = name;
     }
 
     public void UpdatePrice(Money price)
     {
-        DomainException.ThrowIf(price.Amount <= 0, "Price must be positive");
+        DomainException.ThrowIfNull(price);
+        DomainException.ThrowIfNegative(price.Amount);
         Price = price;
     }
 
     public void UpdateSku(Sku sku)
     {
+        DomainException.ThrowIfNull(sku);
         Sku = sku;
     }
 }
