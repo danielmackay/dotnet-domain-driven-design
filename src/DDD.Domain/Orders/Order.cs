@@ -78,7 +78,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public void AddPayment(Money payment)
     {
-        Guard.Against.Condition(payment.Amount <= 0, "Payments can't be negative");
+        Guard.Against.ZeroOrNegative(payment.Amount);
         Guard.Against.Condition(payment > OrderTotal - AmountPaid, "Payment can't exceed order total");
 
         // Ensure currency is set on first payment

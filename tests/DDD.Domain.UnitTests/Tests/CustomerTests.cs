@@ -38,7 +38,7 @@ public class CustomerTests
         Action act = () => Customer.Create(email, firstName, lastName);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("email cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class CustomerTests
         Action act = () => Customer.Create(email, firstName, lastName);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("firstName cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class CustomerTests
         Action act = () => Customer.Create(email, firstName, lastName);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("lastName cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class CustomerTests
         Action act = () => customer.UpdateName(newFirstName, newLastName);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("firstName cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class CustomerTests
         Action act = () => customer.UpdateName(newFirstName, newLastName);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("lastName cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -157,7 +157,7 @@ public class CustomerTests
         Action act = () => customer.UpdateAddress(address);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("address cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
