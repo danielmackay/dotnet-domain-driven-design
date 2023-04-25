@@ -2,7 +2,7 @@
 
 namespace DDD.Domain.Orders;
 
-public class LineItem : BaseEntity<LineItemId>, IEntity
+public class LineItem : Entity<LineItemId>
 {
     public required OrderId OrderId { get; init; }
 

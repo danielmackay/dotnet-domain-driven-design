@@ -37,7 +37,8 @@ public class EntitySaveChangesInterceptor : SaveChangesInterceptor
         if (context is null)
             return;
 
-        foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
+        // TODO DM: Check this still works
+        foreach (var entry in context.ChangeTracker.Entries<Entity<object>>())
             if (entry.State is EntityState.Added)
             {
                 entry.Entity.Created(_dateTime.Now, _currentUserService.UserId);

@@ -1,6 +1,6 @@
 ﻿namespace DDD.Domain.Customers;
 
-public class Customer : BaseEntity<CustomerId>, IAggregateRoot
+public class Customer : AggregateRoot<CustomerId>
 {
     public string Email { get; private set; } = null!;
 
