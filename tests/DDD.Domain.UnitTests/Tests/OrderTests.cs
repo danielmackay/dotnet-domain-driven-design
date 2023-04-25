@@ -74,7 +74,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("quantity cannot be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("quantity cannot be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("price.Amount cannot be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -119,7 +119,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("price.Amount cannot be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -152,7 +152,7 @@ public class OrderTests
         // Act
         Action act = () => order.RemoveLineItem(productId);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Can't modify order once payment is done");
+        act.Should().Throw<ConditionDomainException>().WithMessage("Can't modify order once payment is done");
     }
 
     [Fact]
@@ -199,7 +199,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddPayment(price);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Payments can't be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -212,7 +212,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddPayment(price);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Payments can't be negative");
+        act.Should().Throw<ZeroOrNegativeDomainException>();
     }
 
     [Fact]
@@ -229,7 +229,7 @@ public class OrderTests
         // Act
         Action act = () => order.AddPayment(price);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Payment can't exceed order total");
+        act.Should().Throw<ConditionDomainException>().WithMessage("Payment can't exceed order total");
     }
 
     [Fact]
@@ -290,7 +290,7 @@ public class OrderTests
         // Act
         Action act = () => order.ShipOrder(dateTime);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Can't ship an order with no items");
+        act.Should().Throw<ConditionDomainException>().WithMessage("Can't ship an order with no items");
 
     }
 
@@ -308,7 +308,7 @@ public class OrderTests
         // Act
         Action act = () => order.ShipOrder(dateTime);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("Can't ship an unpaid order");
+        act.Should().Throw<ConditionDomainException>().WithMessage("Can't ship an unpaid order");
     }
 
     [Fact]

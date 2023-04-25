@@ -15,9 +15,9 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     public static Customer Create(string email, string firstName, string lastName)
     {
-        DomainException.ThrowIfEmpty(email);
-        DomainException.ThrowIfEmpty(firstName);
-        DomainException.ThrowIfEmpty(lastName);
+        Guard.Against.Empty(email);
+        Guard.Against.Empty(firstName);
+        Guard.Against.Empty(lastName);
 
         var customer = new Customer()
         {
@@ -32,8 +32,8 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     public void UpdateName(string firstName, string lastName)
     {
-        DomainException.ThrowIfEmpty(firstName);
-        DomainException.ThrowIfEmpty(lastName);
+        Guard.Against.Empty(firstName);
+        Guard.Against.Empty(lastName);
 
         FirstName = firstName;
         LastName = lastName;
@@ -41,7 +41,7 @@ public class Customer : BaseEntity<CustomerId>, IAggregateRoot
 
     public void UpdateAddress(string address)
     {
-        DomainException.ThrowIfEmpty(address);
+        Guard.Against.Empty(address);
 
         Address = address;
     }

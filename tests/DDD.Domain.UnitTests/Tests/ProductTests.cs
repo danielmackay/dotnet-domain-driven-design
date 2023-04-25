@@ -52,7 +52,7 @@ public class ProductTests
         // Act
         Action act = () => Product.Create(name, price, sku);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("name cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class ProductTests
         // Act
         Action act = () => Product.Create(name, price!, sku);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("price cannot be null");
+        act.Should().Throw<NullDomainException>();
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class ProductTests
         // Act
         Action act = () => Product.Create(name, price, sku!);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("sku cannot be null");
+        act.Should().Throw<NullDomainException>();
     }
 
     [Fact]
@@ -102,7 +102,7 @@ public class ProductTests
         // Act
         Action act = () => product.UpdatePrice(newPrice!);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("price cannot be null");
+        act.Should().Throw<NullDomainException>();
     }
 
     [Fact]
@@ -126,7 +126,7 @@ public class ProductTests
         // Act
         Action act = () => product.UpdateName(newName);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("name cannot be empty");
+        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
@@ -150,6 +150,6 @@ public class ProductTests
         // Act
         Action act = () => product.UpdateSku(newSku!);
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("sku cannot be null");
+        act.Should().Throw<NullDomainException>();
     }
 }

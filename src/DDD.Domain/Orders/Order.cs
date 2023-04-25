@@ -54,7 +54,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public LineItem AddLineItem(ProductId productId, Money price, int quantity)
     {
-        DomainException.ThrowIf(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
+        Guard.Against.Condition(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
 
         var lineItem = LineItem.Create(Id, productId, price, quantity);
 
@@ -71,15 +71,15 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public void RemoveLineItem(ProductId productId)
     {
-        DomainException.ThrowIf(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
+        Guard.Against.Condition(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
 
         var lineItem = _lineItems.RemoveAll(x => x.ProductId == productId);
     }
 
     public void AddPayment(Money payment)
     {
-        DomainException.ThrowIf(payment.Amount <= 0, "Payments can't be negative");
-        DomainException.ThrowIf(payment > OrderTotal - AmountPaid, "Payment can't exceed order total");
+        Guard.Against.ZeroOrNegative(payment.Amount);
+        Guard.Against.Condition(payment > OrderTotal - AmountPaid, "Payment can't exceed order total");
 
         // Ensure currency is set on first payment
         if (AmountPaid.Amount == 0)
@@ -102,9 +102,9 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public void ShipOrder(IDateTime dateTime)
     {
-        DomainException.ThrowIf(_lineItems.Sum(li => li.Quantity) <= 0, "Can't ship an order with no items");
-        DomainException.ThrowIf(Status == OrderStatus.PendingPayment, "Can't ship an unpaid order");
-        DomainException.ThrowIf(Status == OrderStatus.InTransit, "Order already shipped to customer");
+        Guard.Against.Condition(_lineItems.Sum(li => li.Quantity) <= 0, "Can't ship an order with no items");
+        Guard.Against.Condition(Status == OrderStatus.PendingPayment, "Can't ship an unpaid order");
+        Guard.Against.Condition(Status == OrderStatus.InTransit, "Order already shipped to customer");
 
         ShippingDate = dateTime.Now;
         Status = OrderStatus.InTransit;
