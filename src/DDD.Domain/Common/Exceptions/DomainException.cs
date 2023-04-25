@@ -17,23 +17,3 @@ public class DomainException : Exception
     {
     }
 }
-
-public class EmptyDomainException : DomainException
-{
-    public EmptyDomainException(string msg) : base(msg) { }
-}
-
-public class NullDomainException : DomainException
-{
-    public NullDomainException(string msg) : base(msg) { }
-}
-
-public class ZeroOrNegativeDomainException : DomainException
-{
-    public ZeroOrNegativeDomainException(string msg) : base(msg) { }
-}
-
-public class ConditionDomainException : DomainException
-{
-    public ConditionDomainException(string msg) : base(msg) { }
-}
