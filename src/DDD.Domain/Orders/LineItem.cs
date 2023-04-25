@@ -23,8 +23,8 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
     // Internal so that only the Order can create a LineItem
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
-        DomainException.ThrowIfNegative(price.Amount);
-        DomainException.ThrowIfNegative(quantity);
+        Guard.Against.ZeroOrNegative(price.Amount);
+        Guard.Against.ZeroOrNegative(quantity);
 
         var lineItem = new LineItem()
         {
@@ -42,7 +42,7 @@ public class LineItem : BaseEntity<LineItemId>, IEntity
 
     internal void RemoveQuantity(int quantity)
     {
-        DomainException.ThrowIf(Quantity - quantity <= 0, "Can't remove all units.  Remove the entire item instead.");
+        Guard.Against.Condition(Quantity - quantity <= 0, "Can't remove all units.  Remove the entire item instead.");
         Quantity -= quantity;
     }
 }

@@ -1,6 +1,7 @@
 # dotnet-ef-domain-driven-design
 
 [![.NET](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml/badge.svg)](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml)
+    
 
 ## Features
 
@@ -47,7 +48,25 @@
 - All properties should be readonly (i.e. private)
 
 
+### Validation Options
 
+1. Exceptions: Add specific domain exception for each validation error.  This is the most explicit, but also the most verbose.
+   1. Pros
+      1. Defensive
+      2. Stack Trace
+      3. Easier Debugging
+   2. Cons
+      1. Performance
+2. Result Object: Wrapper containing Error message, code, success/fail, etc
+   1. Pros
+      1. Expressiveness
+      2. Performance
+      3. Self-documenting errors
+   2. Cons
+      1. Verbose
+      2. Need to sprinkle error handling code throughout your application
+      3. Messy for Deeply nested code
+      4. No stack trace
 
 ## Key Design Decisions
 

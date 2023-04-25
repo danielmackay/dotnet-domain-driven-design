@@ -1,7 +1,4 @@
-﻿using DDD.Domain.Common.Extensions;
-using System.Runtime.CompilerServices;
-
-namespace DDD.Domain.Common.Exceptions;
+﻿namespace DDD.Domain.Common.Exceptions;
 
 public class DomainException : Exception
 {
@@ -19,34 +16,24 @@ public class DomainException : Exception
         : base(message, innerException)
     {
     }
+}
 
-    public static void ThrowIf(bool condition)
-    {
-        if (condition)
-            throw new DomainException();
-    }
+public class EmptyDomainException : DomainException
+{
+    public EmptyDomainException(string msg) : base(msg) { }
+}
 
-    public static void ThrowIf(bool condition, string message)
-    {
-        if (condition)
-            throw new DomainException(message);
-    }
+public class NullDomainException : DomainException
+{
+    public NullDomainException(string msg) : base(msg) { }
+}
 
-    public static void ThrowIfEmpty(string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
-    {
-        if (value.IsEmpty())
-            throw new DomainException($"{paramName} cannot be empty");
-    }
+public class ZeroOrNegativeDomainException : DomainException
+{
+    public ZeroOrNegativeDomainException(string msg) : base(msg) { }
+}
 
-    public static void ThrowIfNegative(decimal value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
-    {
-        if (value <= 0)
-            throw new DomainException($"{paramName} cannot be negative");
-    }
-
-    public static void ThrowIfNull<T>(T value, [CallerArgumentExpression(nameof(value))] string? paramName = null) where T : class
-    {
-        if (value is null)
-            throw new DomainException($"{paramName} cannot be null");
-    }
+public class ConditionDomainException : DomainException
+{
+    public ConditionDomainException(string msg) : base(msg) { }
 }
