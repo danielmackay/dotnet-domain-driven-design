@@ -13,7 +13,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        services.AddScoped<EntitySaveChangesInterceptor>();
 
         var connectionString = config.GetConnectionString("DefaultConnection");
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
@@ -23,9 +22,12 @@ public static class DependencyInjection
                 builder.EnableRetryOnFailure();
             }));
 
-        services.AddScoped<ApplicationDbContextInitializer>();
-
         services.AddSingleton<IDateTime, DateTimeService>();
+        services.AddScoped<ApplicationDbContextInitializer>();
+        services.AddScoped<EntitySaveChangesInterceptor>();
+        services.AddScoped<DispatchDomainEventsInterceptor>();
+        services.AddScoped<OutboxInterceptor>();
+
 
         return services;
     }
