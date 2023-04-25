@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common;
+﻿using DDD.Domain.Common.Entities;
 using DDD.Domain.Orders;
 using System.Text.Json.Serialization;
 

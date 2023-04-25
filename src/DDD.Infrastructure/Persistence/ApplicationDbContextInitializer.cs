@@ -1,5 +1,5 @@
 using Bogus;
-using DDD.Domain.Common;
+using DDD.Domain.Common.Entities;
 using DDD.Domain.Customers;
 using DDD.Domain.Orders;
 using DDD.Domain.Products;

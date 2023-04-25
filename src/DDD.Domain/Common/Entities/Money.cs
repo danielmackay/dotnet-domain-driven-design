@@ -1,4 +1,4 @@
-﻿namespace DDD.Domain.Common;
+﻿namespace DDD.Domain.Common.Entities;
 
 public record Money(string Currency, decimal Amount)
 {

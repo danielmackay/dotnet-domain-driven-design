@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Customers;
+﻿using DDD.Domain.Common.Entities;
+using DDD.Domain.Customers;
 using DDD.Domain.DomainServices;
 using DDD.Domain.Products;
 

@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Products;
+﻿using DDD.Domain.Common.Entities;
+using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 

@@ -1,4 +1,6 @@
-﻿namespace DDD.Domain.Products;
+﻿using DDD.Domain.Common.Entities;
+
+namespace DDD.Domain.Products;
 
 public class Product : AggregateRoot<ProductId>
 {
