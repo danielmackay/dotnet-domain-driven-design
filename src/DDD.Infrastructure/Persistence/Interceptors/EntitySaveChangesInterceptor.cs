@@ -1,5 +1,5 @@
 ﻿using DDD.Application.Common.Interfaces;
-using DDD.Domain.Common.Base;
+using DDD.Domain.Common.Interfaces;
 using DDD.Domain.DomainServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -37,16 +37,18 @@ public class EntitySaveChangesInterceptor : SaveChangesInterceptor
         if (context is null)
             return;
 
-        foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
+        foreach (var entry in context.ChangeTracker.Entries<IAuditableEntity>())
+        {
             if (entry.State is EntityState.Added)
             {
                 entry.Entity.Created(_dateTime.Now, _currentUserService.UserId);
             }
-            else if (entry.State is EntityState.Added or EntityState.Modified ||
+            if (entry.State is EntityState.Added or EntityState.Modified ||
                      entry.HasChangedOwnedEntities())
             {
                 entry.Entity.Updated(_dateTime.Now, _currentUserService.UserId);
             }
+        }
     }
 }
 

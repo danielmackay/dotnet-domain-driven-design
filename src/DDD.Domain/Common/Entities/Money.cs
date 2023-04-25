@@ -1,6 +1,6 @@
-﻿namespace DDD.Domain.Common;
+﻿namespace DDD.Domain.Common.Entities;
 
-public record Money(string Currency, decimal Amount) : IValueObject
+public record Money(string Currency, decimal Amount)
 {
     public static Money Default => new("AUD", 0);
 

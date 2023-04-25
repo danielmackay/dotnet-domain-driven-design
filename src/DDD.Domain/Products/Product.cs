@@ -1,6 +1,8 @@
-﻿namespace DDD.Domain.Products;
+﻿using DDD.Domain.Common.Entities;
 
-public class Product : BaseEntity<ProductId>, IAggregateRoot
+namespace DDD.Domain.Products;
+
+public class Product : AggregateRoot<ProductId>
 {
     public string Name { get; private set; } = null!;
 

@@ -1,8 +1,9 @@
-﻿using DDD.Domain.Products;
+﻿using DDD.Domain.Common.Entities;
+using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 
-public class LineItem : BaseEntity<LineItemId>, IEntity
+public class LineItem : Entity<LineItemId>
 {
     public required OrderId OrderId { get; init; }
 

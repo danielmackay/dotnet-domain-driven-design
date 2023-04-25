@@ -1,6 +1,6 @@
 ﻿namespace DDD.Domain.Products;
 
-public record Sku : IValueObject
+public record Sku
 {
     private const int DefaultLength = 8;
 

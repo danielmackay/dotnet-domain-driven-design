@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common;
+﻿using DDD.Domain.Common.Entities;
 using DDD.Domain.Products;
 
 namespace DDD.Application.Products.Commands.CreateProduct;

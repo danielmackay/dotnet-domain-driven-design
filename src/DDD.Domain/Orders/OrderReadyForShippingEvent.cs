@@ -1,3 +1,3 @@
 ﻿namespace DDD.Domain.Orders;
 
-public record OrderReadyForShippingEvent(Order Order) : BaseEvent;
+public record OrderReadyForShippingEvent(Order Order) : DomainEvent;

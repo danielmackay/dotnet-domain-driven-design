@@ -1,7 +1,10 @@
-﻿namespace DDD.Domain.Common.Base;
+﻿using DDD.Domain.Common.Interfaces;
 
-public abstract class AuditableEntity
+namespace DDD.Domain.Common.Base;
+
+public abstract class Entity<TId> : IAuditableEntity
 {
+    public required TId Id { get; init; }
     public DateTimeOffset CreatedAt { get; private set; }
     public string? CreatedBy { get; private set; }
     public DateTimeOffset? UpdatedAt { get; private set; }

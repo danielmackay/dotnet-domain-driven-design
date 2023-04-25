@@ -1,10 +1,11 @@
-﻿using DDD.Domain.Customers;
+﻿using DDD.Domain.Common.Entities;
+using DDD.Domain.Customers;
 using DDD.Domain.DomainServices;
 using DDD.Domain.Products;
 
 namespace DDD.Domain.Orders;
 
-public class Order : BaseEntity<OrderId>, IAggregateRoot
+public class Order : AggregateRoot<OrderId>
 {
     private readonly List<LineItem> _lineItems = new();
 
@@ -62,7 +63,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
         if (first != null && first.Price.Currency != lineItem.Price.Currency)
             throw new DomainException($"Cannot add line item with currency {lineItem.Price.Currency} to and order than already contains a currency of {first.Price.Currency}");
 
-        lineItem.AddDomainEvent(new LineItemCreatedEvent(lineItem));
+        AddDomainEvent(new LineItemCreatedEvent(lineItem));
 
         _lineItems.Add(lineItem);
 

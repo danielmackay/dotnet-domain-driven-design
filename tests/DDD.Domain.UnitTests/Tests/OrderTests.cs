@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common;
+﻿using DDD.Domain.Common.Entities;
 using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Customers;
 using DDD.Domain.DomainServices;
@@ -57,9 +57,8 @@ public class OrderTests
         // Act
         var lineItem = order.AddLineItem(productId, price, quantity);
         // Assert
-        lineItem.DomainEvents.Should().NotBeEmpty();
-        lineItem.DomainEvents.Should().ContainSingle();
-        lineItem.DomainEvents.Should().ContainSingle(x => x is LineItemCreatedEvent);
+        order.DomainEvents.Should().NotBeEmpty();
+        order.DomainEvents.Should().ContainSingle(x => x is LineItemCreatedEvent);
     }
 
     [Fact]

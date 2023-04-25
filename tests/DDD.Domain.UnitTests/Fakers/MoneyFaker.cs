@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common;
+﻿using DDD.Domain.Common.Entities;
 
 namespace DDD.Domain.UnitTests.Fakers;
 
