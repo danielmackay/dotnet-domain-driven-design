@@ -5,14 +5,14 @@ namespace DDD.Domain.Common.Base;
 
 public abstract class AggregateRoot<TId> : Entity<TId>, IDomainEvents
 {
-    private readonly List<BaseEvent> _domainEvents = new();
+    private readonly List<DomainEvent> _domainEvents = new();
 
     [NotMapped]
-    public IReadOnlyList<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    public void AddDomainEvent(BaseEvent domainEvent) => _domainEvents.Add(domainEvent);
+    public void AddDomainEvent(DomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 
-    public void RemoveDomainEvent(BaseEvent domainEvent) => _domainEvents.Remove(domainEvent);
+    public void RemoveDomainEvent(DomainEvent domainEvent) => _domainEvents.Remove(domainEvent);
 
     public void ClearDomainEvents() => _domainEvents.Clear();
 }
