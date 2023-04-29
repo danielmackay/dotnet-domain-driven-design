@@ -45,6 +45,6 @@ public class ProcessOutboxMessagesJob
             message.ProcessedOnUtc = _dateTime.Now;
         }
 
-        await _applicationDbContext.SaveChangesAsync();
+        await _applicationDbContext.SaveChangesAsync(cancellationToken);
     }
 }
