@@ -53,4 +53,6 @@ app.MapCustomerEndpoints();
 app.MapProductEndpoints();
 app.MapOrderEndpoints();
 
+app.UseInfrastructure();
+
 app.Run();

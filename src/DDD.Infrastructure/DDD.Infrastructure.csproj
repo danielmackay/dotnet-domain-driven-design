@@ -16,8 +16,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Quartz" Version="3.6.2" />
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.2" />
+    <PackageReference Include="Hangfire.Core" Version="1.8.*" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.*" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.*" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +29,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Code\Personal\dotnet-ef-domain-driven-design\DDD.Infrastructure\Migrations\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Code\Personal\dotnet-ef-domain-driven-design\DDD.Infrastructure\Migrations\.editorconfig" />
   </ItemGroup>
 
 </Project>

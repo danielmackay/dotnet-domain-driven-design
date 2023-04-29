@@ -4,10 +4,11 @@ using DDD.Infrastructure.BackgroundJobs;
 using DDD.Infrastructure.Persistence;
 using DDD.Infrastructure.Persistence.Interceptors;
 using DDD.Infrastructure.Services;
+using Hangfire;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Quartz;
 
 namespace DDD.Infrastructure;
 
@@ -29,29 +30,30 @@ public static class DependencyInjection
         services.AddScoped<DispatchDomainEventsInterceptor>();
         services.AddScoped<OutboxInterceptor>();
 
-        AddQuartz(services);
+        AddHangfire(services, config);
 
         return services;
     }
 
-    private static void AddQuartz(IServiceCollection services)
+    private static void AddHangfire(IServiceCollection services, IConfiguration config)
     {
-        services.AddQuartz(configure =>
-        {
-            var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+        // Add Hangfire services.
+        services.AddHangfire(configuration => configuration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(config.GetConnectionString("DefaultConnection")));
 
-            configure
-                .AddJob<ProcessOutboxMessagesJob>(jobKey)
-                .AddTrigger(trigger =>
-                    trigger.ForJob(jobKey)
-                        .WithSimpleSchedule(schedule =>
-                            schedule.WithIntervalInSeconds(10)
-                                .RepeatForever()));
+        // Add the processing server as IHostedService
+        services.AddHangfireServer();
+    }
 
-            configure.UseMicrosoftDependencyInjectionJobFactory();
+    public static void UseInfrastructure(this IApplicationBuilder builder)
+    {
+        // This can be viewed at {localhost}/hangfire
+        builder.UseHangfireDashboard();
 
-        });
-
-        services.AddQuartzHostedService();
+        var manager = builder.ApplicationServices.GetRequiredService<IRecurringJobManager>();
+        manager.AddOrUpdate<ProcessOutboxMessagesJob>("outbox-messages", x => x.Execute(CancellationToken.None), Cron.Minutely);
     }
 }

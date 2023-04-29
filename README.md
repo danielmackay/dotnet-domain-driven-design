@@ -14,6 +14,7 @@
 - Fluent Validation
 - Minimal APIs
 - Specifications
+- Outbox Pattern with Hangfire background processing
 
 ## DDD Principles
 
