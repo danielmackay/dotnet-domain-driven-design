@@ -4,12 +4,10 @@ using DDD.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Quartz;
 
 namespace DDD.Infrastructure.BackgroundJobs;
 
-[DisallowConcurrentExecution]
-public class ProcessOutboxMessagesJob : IJob
+public class ProcessOutboxMessagesJob
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IPublisher _publisher;
@@ -22,12 +20,12 @@ public class ProcessOutboxMessagesJob : IJob
         _dateTime = dateTime;
     }
 
-    public async Task Execute(IJobExecutionContext context)
+    public async Task Execute()
     {
         var messages = await _applicationDbContext.OutboxMessages
             .Where(om => om.ProcessedOnUtc == null)
             .Take(20)
-            .ToListAsync(context.CancellationToken);
+            .ToListAsync();
 
         if (messages.Count == 0)
             return;
@@ -42,7 +40,7 @@ public class ProcessOutboxMessagesJob : IJob
                 continue;
 
             // NOTE: In Production, this should be wrapped in a try-catch
-            await _publisher.Publish(domainEvent, context.CancellationToken);
+            await _publisher.Publish(domainEvent);
 
             message.ProcessedOnUtc = _dateTime.Now;
         }
