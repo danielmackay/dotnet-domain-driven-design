@@ -54,6 +54,6 @@ public static class DependencyInjection
         builder.UseHangfireDashboard();
 
         var manager = builder.ApplicationServices.GetRequiredService<IRecurringJobManager>();
-        manager.AddOrUpdate<ProcessOutboxMessagesJob>("outbox-messages", x => x.Execute(), Cron.Minutely);
+        manager.AddOrUpdate<ProcessOutboxMessagesJob>("outbox-messages", x => x.Execute(CancellationToken.None), Cron.Minutely);
     }
 }
