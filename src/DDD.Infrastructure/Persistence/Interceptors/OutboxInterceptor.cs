@@ -3,7 +3,6 @@ using DDD.Domain.DomainServices;
 using DDD.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
-using System.Text.Json;
 
 namespace DDD.Infrastructure.Persistence.Interceptors;
 
@@ -24,7 +23,6 @@ public sealed class OutboxInterceptor : SaveChangesInterceptor
         var dbContext = eventData.Context;
         if (dbContext == null)
             return await base.SavingChangesAsync(eventData, result, cancellationToken);
-
 
         var settings = new JsonSerializerSettings
         {
