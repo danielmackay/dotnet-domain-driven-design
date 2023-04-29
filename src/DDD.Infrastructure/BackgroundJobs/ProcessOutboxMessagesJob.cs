@@ -20,12 +20,12 @@ public class ProcessOutboxMessagesJob
         _dateTime = dateTime;
     }
 
-    public async Task Execute()
+    public async Task Execute(CancellationToken cancellationToken)
     {
         var messages = await _applicationDbContext.OutboxMessages
             .Where(om => om.ProcessedOnUtc == null)
             .Take(20)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         if (messages.Count == 0)
             return;
@@ -40,7 +40,7 @@ public class ProcessOutboxMessagesJob
                 continue;
 
             // NOTE: In Production, this should be wrapped in a try-catch
-            await _publisher.Publish(domainEvent);
+            await _publisher.Publish(domainEvent, cancellationToken);
 
             message.ProcessedOnUtc = _dateTime.Now;
         }
