@@ -1,7 +1,6 @@
 # dotnet-ef-domain-driven-design
 
 [![.NET](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml/badge.svg)](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml)
-    
 
 ## Features
 
@@ -15,59 +14,6 @@
 - Minimal APIs
 - Specifications
 - Outbox Pattern with Hangfire background processing
-
-## DDD Principles
-
-### Aggregate Roots
-
-- Use AggregateRoots for objects that can be created directly
-- All user interactions should go via AggregateRoots
-- Exposed via DbContext
-- Will have a table in t
-- Aggregates can only be pulled in their entirety from the DB.  This means that all child entities that make up the aggregate root will also be pulled in
-
-### Entities
-
-- Use Entities for objects that are part of an aggregate root and distinguishable by ID (usually a separate table)
-- Entities **cannot be modified outside** of their aggregate root
-- Not exposed via DbContext
-- Will have a table in the DB
-- Internal factory method for creation so that can only be created via aggregate roots
-- Behaviors should be internal so that they can only be called by the aggregate root
-
-### Value Objects
-
-- Use ValueObjects for objects that are defined by their properties (i.e. not by ID) (usually part of another table)
-- Value objects can only be modified as part of their aggregate root
-- Will be part of the AggregateRoot table in the DB
-- Configured in EF via `builder.OwnsOne()`
-
-### General
-
-- objects can be created using
-  - factory methods
-- All properties should be readonly (i.e. private)
-
-
-### Validation Options
-
-1. Exceptions: Add specific domain exception for each validation error.  This is the most explicit, but also the most verbose.
-   1. Pros
-      1. Defensive
-      2. Stack Trace
-      3. Easier Debugging
-   2. Cons
-      1. Performance
-2. Result Object: Wrapper containing Error message, code, success/fail, etc
-   1. Pros
-      1. Expressiveness
-      2. Performance
-      3. Self-documenting errors
-   2. Cons
-      1. Verbose
-      2. Need to sprinkle error handling code throughout your application
-      3. Messy for Deeply nested code
-      4. No stack trace
 
 ## Key Design Decisions
 
@@ -153,15 +99,3 @@ Sometimes entities will need to leverage a service to perform a behavior.  In th
 
 // Test Naming Convention: MethodName_StateUnderTest_ExpectedBehavior
 // [Method/PropertyName]_Should_[ExpectedBehavior]_When_[StateUnderTest]
-
-## Thoughts
-
-- Once you start relying on aggregates being loaded as 'entity sets', they must be loaded as such.  While this is possible with EF, it is error-prone if you need to load the same aggregate in multiple places.  To get around this you need to use a repository to load the aggregate root and all of its related entities in a single query.
-- Initially, I thought we could use repositories for commands, and then use the DbContext directly for queries, but if your queries rely on any computed properties that rely on the whole aggregate this isn't possible.  Could get around this though, by not using computed properties and instead storing the computed value in the DB.
-- Can't pass owned entities to constructors, so will need to use factory methods for those.
-- Business logic and validation can now be easily unit tested in isolation via AggregateRoot tests.
-- DDD + CQRS is a heavy-weight solution.  It gives us great control by ensuring entities are always in a valid state, but there is additional complexity across both the Domain and Application that are required to support this.  Perhaps only ideal for 'Large' projects.
-- If you have a massive Aggregate root, but just need to update a simple property on one of the entities, you will need to load the whole aggregate root.  This could be a performance issue.
-- Some interfaces need to be pushed to the domain layer
-- IMHO the repository interface remains in the application, NOT the domain as this is a persistence concern.  The domain should not be concerned with persistence.
-- IMHO we should not have separate domain entities and data models.  We can keep the domain entities as they are, but we can use EF to configure the persistence. This saves on a lot of double handling.
