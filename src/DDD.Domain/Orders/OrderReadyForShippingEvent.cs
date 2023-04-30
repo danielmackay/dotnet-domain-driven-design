@@ -2,5 +2,5 @@
 
 public record OrderReadyForShippingEvent(OrderId OrderId) : DomainEvent
 {
-    public OrderReadyForShippingEvent(Order order) : this(order.Id) { }
+    public static OrderReadyForShippingEvent Create(Order order) => new(order.Id);
 }

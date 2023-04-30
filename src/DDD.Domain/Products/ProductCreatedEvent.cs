@@ -2,5 +2,5 @@
 
 public record ProductCreatedEvent(ProductId Product, string ProductName) : DomainEvent
 {
-    public ProductCreatedEvent(Product product) : this(product.Id, product.Name) { }
+    public static ProductCreatedEvent Create(Product product) => new(product.Id, product.Name);
 }

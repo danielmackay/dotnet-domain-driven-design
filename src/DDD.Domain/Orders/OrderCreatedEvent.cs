@@ -4,5 +4,5 @@ namespace DDD.Domain.Orders;
 
 public record OrderCreatedEvent(OrderId OrderId, CustomerId CustomerId) : DomainEvent
 {
-    public OrderCreatedEvent(Order order) : this(order.Id, order.CustomerId) { }
+    public static OrderCreatedEvent Create(Order order) => new(order.Id, order.CustomerId);
 }

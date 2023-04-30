@@ -6,7 +6,7 @@ namespace DDD.Domain.UnitTests.Tests;
 public class OutboxMessages
 {
     [Fact]
-    public void Can_Serialize_Data()
+    public void Customer_Created_Event_Should_Be_Deserialized_Successfully()
     {
         // Arrange
         var customer = Customer.Create("email@gmail.com", "firstName", "lastName");
@@ -28,6 +28,6 @@ public class OutboxMessages
         result.Should().NotBeNull();
         result!.FirstName.Should().Be(customer.FirstName);
         result.LastName.Should().Be(customer.LastName);
-        result.Should().Be(customer.Email);
+        result.Id.Should().Be(customer.Id);
     }
 }
