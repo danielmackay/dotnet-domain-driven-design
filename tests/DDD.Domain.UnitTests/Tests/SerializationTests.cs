@@ -11,7 +11,7 @@ public class SerializationTests
     {
         // Arrange
         var order = Order.Create(new CustomerId(Guid.NewGuid()));
-        var evt = new OrderCreatedEvent(order);
+        var evt = OrderCreatedEvent.Create(order);
 
         // Act
         var json = JsonSerializer.Serialize(evt);

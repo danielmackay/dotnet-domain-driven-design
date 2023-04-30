@@ -48,7 +48,7 @@ public class Order : AggregateRoot<OrderId>
             Status = OrderStatus.PendingPayment
         };
 
-        order.AddDomainEvent(new OrderCreatedEvent(order));
+        order.AddDomainEvent(OrderCreatedEvent.Create(order));
 
         return order;
     }
