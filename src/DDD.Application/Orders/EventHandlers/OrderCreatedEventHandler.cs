@@ -11,7 +11,7 @@ public class OrderCreatedEventHandler : INotificationHandler<OrderCreatedEvent>
 
     public Task Handle(OrderCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("{Handler}: Order was created for Cusomter {CustomerId}", nameof(OrderCreatedEventHandler), notification.Order.CustomerId.Value);
+        _logger.LogInformation("{Handler}: Order was created for Cusomter {CustomerId}", nameof(OrderCreatedEventHandler), notification.CustomerId.Value);
 
         return Task.CompletedTask;
     }

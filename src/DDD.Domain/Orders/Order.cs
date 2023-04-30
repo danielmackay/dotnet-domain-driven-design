@@ -63,7 +63,7 @@ public class Order : AggregateRoot<OrderId>
         if (first != null && first.Price.Currency != lineItem.Price.Currency)
             throw new DomainException($"Cannot add line item with currency {lineItem.Price.Currency} to and order than already contains a currency of {first.Price.Currency}");
 
-        AddDomainEvent(new LineItemCreatedEvent(lineItem));
+        AddDomainEvent(new LineItemCreatedEvent(lineItem.Id, lineItem.OrderId));
 
         _lineItems.Add(lineItem);
 
@@ -91,7 +91,7 @@ public class Order : AggregateRoot<OrderId>
         if (AmountPaid >= OrderTotal)
         {
             Status = OrderStatus.ReadyForShipping;
-            AddDomainEvent(new OrderReadyForShippingEvent(this));
+            AddDomainEvent(new OrderReadyForShippingEvent(Id));
         }
     }
 
