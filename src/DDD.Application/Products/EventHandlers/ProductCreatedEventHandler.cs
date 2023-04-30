@@ -11,7 +11,7 @@ public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEve
 
     public Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("{Handler}: Product {Name} was created", nameof(ProductCreatedEventHandler), notification.Product.Name);
+        _logger.LogInformation("{Handler}: Product {Name} was created", nameof(ProductCreatedEventHandler), notification.ProductName);
 
         return Task.CompletedTask;
     }

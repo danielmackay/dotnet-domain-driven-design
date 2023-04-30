@@ -1,3 +1,8 @@
-﻿namespace DDD.Domain.Orders;
+﻿using DDD.Domain.Customers;
 
-public record OrderCreatedEvent(Order Order) : DomainEvent;
+namespace DDD.Domain.Orders;
+
+public record OrderCreatedEvent(OrderId OrderId, CustomerId CustomerId) : DomainEvent
+{
+    public static OrderCreatedEvent Create(Order order) => new(order.Id, order.CustomerId);
+}

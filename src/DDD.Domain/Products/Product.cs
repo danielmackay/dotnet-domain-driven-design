@@ -28,7 +28,7 @@ public class Product : AggregateRoot<ProductId>
             Sku = sku
         };
 
-        product.AddDomainEvent(new ProductCreatedEvent(product));
+        product.AddDomainEvent(ProductCreatedEvent.Create(product));
 
         return product;
     }

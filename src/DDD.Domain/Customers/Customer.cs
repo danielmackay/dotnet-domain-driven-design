@@ -26,7 +26,7 @@ public class Customer : AggregateRoot<CustomerId>
             FirstName = firstName,
             LastName = lastName
         };
-        customer.AddDomainEvent(new CustomerCreatedEvent(customer));
+        customer.AddDomainEvent(CustomerCreatedEvent.Create(customer));
         return customer;
     }
 
