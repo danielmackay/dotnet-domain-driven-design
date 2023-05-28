@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Common.Entities;
+﻿using DDD.Domain.Categories;
+using DDD.Domain.Common.Entities;
 using DDD.Domain.Common.Exceptions;
 using DDD.Domain.Products;
 using DDD.Domain.UnitTests.Fakers;
@@ -18,8 +19,9 @@ public class ProductTests
         var name = _faker.Commerce.ProductName();
         var price = _moneyFaker.Generate();
         var sku = _skuFaker.Generate();
+        var categoryId = new CategoryId(Guid.NewGuid());
         // Act
-        var product = Product.Create(name, price, sku);
+        var product = Product.Create(name, price, sku, categoryId);
         // Assert
         product.Should().NotBeNull();
         product.Id.Should().NotBeNull();
@@ -34,8 +36,9 @@ public class ProductTests
         var name = _faker.Commerce.ProductName();
         var price = _moneyFaker.Generate();
         var sku = _skuFaker.Generate();
+        var categoryId = new CategoryId(Guid.NewGuid());
         // Act
-        var product = Product.Create(name, price, sku);
+        var product = Product.Create(name, price, sku, categoryId);
         // Assert
         product.DomainEvents.Should().NotBeEmpty();
         product.DomainEvents.Should().ContainSingle();
@@ -49,8 +52,10 @@ public class ProductTests
         var name = string.Empty;
         var price = _moneyFaker.Generate();
         var sku = _skuFaker.Generate();
+        var categoryId = new CategoryId(Guid.NewGuid());
+
         // Act
-        Action act = () => Product.Create(name, price, sku);
+        Action act = () => Product.Create(name, price, sku, categoryId);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("name cannot be empty");
     }
@@ -62,8 +67,10 @@ public class ProductTests
         var name = _faker.Commerce.ProductName();
         Money? price = null;
         var sku = _skuFaker.Generate();
+        var categoryId = new CategoryId(Guid.NewGuid());
+
         // Act
-        Action act = () => Product.Create(name, price!, sku);
+        Action act = () => Product.Create(name, price!, sku, categoryId);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("price cannot be null");
     }
@@ -75,8 +82,10 @@ public class ProductTests
         var name = _faker.Commerce.ProductName();
         var price = _moneyFaker.Generate();
         Sku? sku = null;
+        var categoryId = new CategoryId(Guid.NewGuid());
+
         // Act
-        Action act = () => Product.Create(name, price, sku!);
+        Action act = () => Product.Create(name, price, sku!, categoryId);
         // Assert
         act.Should().Throw<DomainException>().WithMessage("sku cannot be null");
     }
@@ -85,7 +94,8 @@ public class ProductTests
     public void UpdatePrice_Should_Succeed_When_Price_Is_Valid()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         var newPrice = _moneyFaker.Generate();
         // Act
         product.UpdatePrice(newPrice);
@@ -97,7 +107,8 @@ public class ProductTests
     public void UpdatePrice_Should_Throw_When_Price_Is_Null()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         Money? newPrice = null;
         // Act
         Action act = () => product.UpdatePrice(newPrice!);
@@ -109,7 +120,8 @@ public class ProductTests
     public void UpdateName_Should_Succeed_When_Name_Is_Valid()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         var newName = _faker.Commerce.ProductName();
         // Act
         product.UpdateName(newName);
@@ -121,7 +133,8 @@ public class ProductTests
     public void UpdateName_Should_Throw_When_Name_Is_Empty()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         var newName = string.Empty;
         // Act
         Action act = () => product.UpdateName(newName);
@@ -133,7 +146,8 @@ public class ProductTests
     public void UpdateSku_Should_Succeed_When_Sku_Is_Valid()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         var newSku = _skuFaker.Generate();
         // Act
         product.UpdateSku(newSku);
@@ -145,7 +159,8 @@ public class ProductTests
     public void UpdateSku_Should_Throw_When_Sku_Is_Null()
     {
         // Arrange
-        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate());
+        var categoryId = new CategoryId(Guid.NewGuid());
+        var product = Product.Create(_faker.Commerce.ProductName(), _moneyFaker.Generate(), _skuFaker.Generate(), categoryId);
         Sku? newSku = null;
         // Act
         Action act = () => product.UpdateSku(newSku!);

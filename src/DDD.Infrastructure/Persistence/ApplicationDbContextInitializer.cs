@@ -42,10 +42,10 @@ public class ApplicationDbContextInitializer
 
     public async Task SeedAsync()
     {
+        await SeedCategoriesAsync();
         await SeedProductsAsync();
         await SeedCustomersAsync();
         await SeedOrdersAsync();
-        await SeedCategoriesAsync();
     }
 
     private async Task SeedCustomersAsync()
@@ -66,6 +66,8 @@ public class ApplicationDbContextInitializer
         if (await _dbContext.Products.AnyAsync())
             return;
 
+        var categories = await _dbContext.Categories.ToListAsync();
+
         var moneyFaker = new Faker<Money>()
             .CustomInstantiator(f => new Money(f.Finance.Currency().Code, f.Finance.Amount()));
 
@@ -73,7 +75,7 @@ public class ApplicationDbContextInitializer
             .CustomInstantiator(f => Sku.Create(f.Commerce.Ean8())!);
 
         var faker = new Faker<Product>()
-            .CustomInstantiator(f => Product.Create(f.Commerce.ProductName(), moneyFaker.Generate(), skuFaker.Generate()));
+            .CustomInstantiator(f => Product.Create(f.Commerce.ProductName(), moneyFaker.Generate(), skuFaker.Generate(), f.PickRandom(categories).Id));
 
         var products = faker.Generate(NumProducts);
         _dbContext.Products.AddRange(products);
