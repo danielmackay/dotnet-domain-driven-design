@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Customers;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace DDD.Application.Customers.EventHandlers;
 
