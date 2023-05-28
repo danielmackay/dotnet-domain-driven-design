@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Categories;
-using DDD.Domain.Products;
+﻿using DDD.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,7 +19,7 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.OwnsOne(p => p.Price, MoneyConfiguration.BuildAction);
 
-        builder.HasOne<Category>()
+        builder.HasOne(p => p.Category)
             .WithMany()
             .HasForeignKey(o => o.CategoryId)
             .IsRequired();

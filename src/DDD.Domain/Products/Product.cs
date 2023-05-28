@@ -7,6 +7,8 @@ public class Product : AggregateRoot<ProductId>
 {
     public CategoryId CategoryId { get; set; } = null!;
 
+    public Category Category { get; set; } = null!;
+
     public string Name { get; private set; } = null!;
 
     public Money Price { get; private set; } = null!;

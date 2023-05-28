@@ -14,7 +14,7 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, I
     public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.Products
-            .Select(p => new ProductDto(p.Id.Value, p.Name, p.Sku.Value, p.Price.Amount, p.Price.Currency))
+            .Select(p => new ProductDto(p.Id.Value, p.Name, p.Sku.Value, p.Price.Amount, p.Price.Currency, p.Category.Name))
             .ToListAsync(cancellationToken);
     }
 }
