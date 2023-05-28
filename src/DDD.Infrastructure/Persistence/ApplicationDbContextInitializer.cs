@@ -1,4 +1,5 @@
 using Bogus;
+using DDD.Application.Categories;
 using DDD.Domain.Categories;
 using DDD.Domain.Common.Entities;
 using DDD.Domain.Customers;
@@ -100,7 +101,7 @@ public class ApplicationDbContextInitializer
             return;
 
         var categoryFaker = new Faker<Category>()
-            .CustomInstantiator(f => Category.Create(f.Commerce.Categories(1)[0]));
+            .CustomInstantiator(f => Category.Create(f.Commerce.Categories(1)[0], new CategoryService(_dbContext)));
 
         var categories = categoryFaker.Generate(NumCategories);
         _dbContext.Categories.AddRange(categories);

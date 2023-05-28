@@ -1,4 +1,5 @@
-﻿using DDD.Application.Common.Behaviours;
+﻿using DDD.Application.Categories;
+using DDD.Application.Common.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DDD.Application;
@@ -18,6 +19,8 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
         });
+
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

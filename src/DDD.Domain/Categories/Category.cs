@@ -7,9 +7,12 @@ public class Category : AggregateRoot<CategoryId>
     private Category() { }
 
     // NOTE: Need to use a factory, as EF does not let owned entities (i.e Money & Sku) be passed via the constructor
-    public static Category Create(string name)
+    public static Category Create(string name, ICategoryService categoryService)
     {
         Guard.Against.Empty(name);
+
+        if (categoryService.CategoryExists(name))
+            throw new DomainException($"Category {name} already exists");
 
         var category = new Category
         {

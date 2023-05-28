@@ -1,6 +1,10 @@
 ﻿global using Ardalis.Specification.EntityFrameworkCore;
 global using DDD.Application.Common.Exceptions;
 global using DDD.Application.Common.Interfaces;
+global using DDD.Domain.Categories;
+global using DDD.Domain.Customers;
+global using DDD.Domain.Orders;
+global using DDD.Domain.Products;
 global using FluentValidation;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
