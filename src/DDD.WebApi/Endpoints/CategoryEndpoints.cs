@@ -1,5 +1,6 @@
 ﻿using DDD.Application.Categories.Queries.GetAllCategories;
 using DDD.Application.Categorys.Commands.CreateCategory;
+using DDD.Application.Categorys.Commands.UpdateCategory;
 using DDD.WebApi.Extensions;
 using MediatR;
 
@@ -23,5 +24,15 @@ public static class CategoryEndpoints
             .MapPost("/", async (ISender sender, CreateCategoryCommand command, CancellationToken ct) => await sender.Send(command, ct))
             .WithName("CreateCategory")
             .ProducesPost();
+
+        group
+            .MapPut("/{categoryId:Guid}", async (ISender sender, Guid categoryId, UpdateCategoryCommand command, CancellationToken ct) =>
+            {
+                command.CategoryId = categoryId;
+                await sender.Send(command, ct);
+                return Results.NoContent();
+            })
+            .WithName("UpdateCategory")
+            .ProducesPut();
     }
 }
