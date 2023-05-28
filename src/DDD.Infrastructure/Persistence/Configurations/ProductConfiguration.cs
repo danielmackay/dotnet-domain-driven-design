@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Common.Entities;
-using DDD.Domain.Products;
+﻿using DDD.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,14 +18,5 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasMaxLength(50);
 
         builder.OwnsOne(p => p.Price, MoneyConfiguration.BuildAction);
-    }
-}
-
-internal static class MoneyConfiguration
-{
-    internal static void BuildAction<T>(OwnedNavigationBuilder<T, Money> priceBuilder) where T : class
-    {
-        priceBuilder.Property(m => m.Currency).HasMaxLength(3);
-        priceBuilder.Property(m => m.Amount).HasPrecision(18, 2);
     }
 }
