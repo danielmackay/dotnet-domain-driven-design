@@ -343,4 +343,21 @@ public class OrderTests
         // Assert
         order.ShippingDate.Should().Be(now);
     }
+
+    [Fact]
+    public void AddLineItem_Should_Update_Quantity_When_ProductExists()
+    {
+        // Arrange
+        var customerId = new CustomerId(Guid.NewGuid());
+        var productId = new ProductId(Guid.NewGuid());
+        var order = Order.Create(customerId);
+        var price = _moneyFaker.Generate();
+        var quantity = 1;
+        order.AddLineItem(productId, price, quantity);
+        // Act
+        order.AddLineItem(productId, price, quantity);
+        // Assert
+        order.LineItems.Should().ContainSingle();
+        order.LineItems.Should().ContainSingle(x => x.Quantity == 2);
+    }
 }
