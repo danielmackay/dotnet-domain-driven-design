@@ -1,4 +1,5 @@
-﻿using DDD.Application.Categorys.Commands.CreateCategory;
+﻿using DDD.Application.Categories.Queries.GetAllCategories;
+using DDD.Application.Categorys.Commands.CreateCategory;
 using DDD.WebApi.Extensions;
 using MediatR;
 
@@ -13,10 +14,10 @@ public static class CategoryEndpoints
             .WithTags("Categories")
             .WithOpenApi();
 
-        //group
-        //    .MapGet("/", async (ISender sender, CancellationToken ct) => await sender.Send(new GetAllProductsQuery(), ct))
-        //    .WithName("GetProducts")
-        //    .ProducesGet<ProductDto[]>();
+        group
+            .MapGet("/", async (ISender sender, CancellationToken ct) => await sender.Send(new GetAllCategoriesQuery(), ct))
+            .WithName("GetCategories")
+            .ProducesGet<CategoryDto[]>();
 
         group
             .MapPost("/", async (ISender sender, CreateCategoryCommand command, CancellationToken ct) => await sender.Send(command, ct))
