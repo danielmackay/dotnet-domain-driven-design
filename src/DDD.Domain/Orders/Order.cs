@@ -22,6 +22,8 @@ public class Order : AggregateRoot<OrderId>
 
     public DateTimeOffset ShippingDate { get; private set; }
 
+    public string? OrderCurrency => _lineItems.FirstOrDefault()?.Price.Currency;
+
     public Money OrderTotal
     {
         get
@@ -57,14 +59,18 @@ public class Order : AggregateRoot<OrderId>
     {
         Guard.Against.Condition(Status != OrderStatus.PendingPayment, "Can't modify order once payment is done");
 
+        if (OrderCurrency != null && OrderCurrency != price.Currency)
+            throw new DomainException($"Cannot add line item with currency {price.Currency} to and order than already contains a currency of {price.Currency}");
+
+        var existingLineItem = _lineItems.FirstOrDefault(li => li.ProductId == productId);
+        if (existingLineItem != null)
+        {
+            existingLineItem.AddQuantity(quantity);
+            return existingLineItem;
+        }
+
         var lineItem = LineItem.Create(Id, productId, price, quantity);
-
-        var first = _lineItems.FirstOrDefault();
-        if (first != null && first.Price.Currency != lineItem.Price.Currency)
-            throw new DomainException($"Cannot add line item with currency {lineItem.Price.Currency} to and order than already contains a currency of {first.Price.Currency}");
-
         AddDomainEvent(new LineItemCreatedEvent(lineItem.Id, lineItem.OrderId));
-
         _lineItems.Add(lineItem);
 
         return lineItem;
