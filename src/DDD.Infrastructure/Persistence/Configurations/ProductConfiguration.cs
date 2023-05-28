@@ -1,5 +1,4 @@
-﻿using DDD.Domain.Categories;
-using DDD.Domain.Products;
+﻿using DDD.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
