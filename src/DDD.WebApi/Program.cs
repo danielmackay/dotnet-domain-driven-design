@@ -52,6 +52,7 @@ app.UseExceptionFilter();
 app.MapCustomerEndpoints();
 app.MapProductEndpoints();
 app.MapOrderEndpoints();
+app.MapCategoryEndpoints();
 
 app.UseInfrastructure();
 

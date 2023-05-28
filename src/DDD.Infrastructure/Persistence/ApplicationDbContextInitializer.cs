@@ -1,4 +1,6 @@
 using Bogus;
+using DDD.Application.Categories;
+using DDD.Domain.Categories;
 using DDD.Domain.Common.Entities;
 using DDD.Domain.Customers;
 using DDD.Domain.Orders;
@@ -16,6 +18,7 @@ public class ApplicationDbContextInitializer
     private const int NumProducts = 20;
     private const int NumCustomers = 20;
     private const int NumOrders = 20;
+    private const int NumCategories = 5;
 
     public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext dbContext)
     {
@@ -42,6 +45,7 @@ public class ApplicationDbContextInitializer
         await SeedProductsAsync();
         await SeedCustomersAsync();
         await SeedOrdersAsync();
+        await SeedCategoriesAsync();
     }
 
     private async Task SeedCustomersAsync()
@@ -88,6 +92,19 @@ public class ApplicationDbContextInitializer
 
         var orders = orderFaker.Generate(NumOrders);
         _dbContext.Orders.AddRange(orders);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    private async Task SeedCategoriesAsync()
+    {
+        if (await _dbContext.Categories.AnyAsync())
+            return;
+
+        var categoryFaker = new Faker<Category>()
+            .CustomInstantiator(f => Category.Create(f.Commerce.Categories(1)[0], new CategoryService(_dbContext)));
+
+        var categories = categoryFaker.Generate(NumCategories);
+        _dbContext.Categories.AddRange(categories);
         await _dbContext.SaveChangesAsync();
     }
 }
