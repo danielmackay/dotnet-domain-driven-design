@@ -17,10 +17,6 @@
 
 ## Key Design Decisions
 
-### DomainService interfaces will need to exist in Domain
-
-Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios, we will need a DomainService interface in the Domain project, and implementation in the Application or Infrastructure project.
-
 ### Unit Test Naming Conventions
 
 Test naming convention should follow the pattern
