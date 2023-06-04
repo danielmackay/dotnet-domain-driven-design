@@ -1,6 +1,7 @@
 # dotnet-ef-domain-driven-design
 
 [![.NET](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml/badge.svg)](https://github.com/danielmackay/dotnet-ef-domain-driven-design/actions/workflows/dotnet.yml)
+[![Log4brains ADRs](https://danielmackay.github.io/dotnet-ef-domain-driven-design/log4brains/badge.svg)](https://danielmackay.github.io/dotnet-ef-domain-driven-design/log4brains)
 
 ## Features
 
