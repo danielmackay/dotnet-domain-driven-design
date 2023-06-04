@@ -19,24 +19,19 @@ Technical Story: [description | ticket/issue URL] <!-- optional -->
 
 ## Considered Options
 
-- [option 1]
-- [option 2]
-- [option 3]
+1. [option 1]
+2. [option 2]
+3. [option 3]
 - … <!-- numbers of options can vary -->
 
 ## Decision Outcome
 
 Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
 
-### Positive Consequences <!-- optional -->
+### Consequences <!-- optional -->
 
-- [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-- …
-
-### Negative Consequences <!-- optional -->
-
-- [e.g., compromising quality attribute, follow-up decisions required, …]
-- …
+- ✅ [upside 1]
+- ❌ [downside 1]
 
 ## Pros and Cons of the Options <!-- optional -->
 
@@ -44,28 +39,22 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 
 [example | description | pointer to more information | …] <!-- optional -->
 
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because [argument c]
-- … <!-- numbers of pros and cons can vary -->
+- ✅ [argument a]
+- ❌ [argument b]
 
 ### [option 2]
 
 [example | description | pointer to more information | …] <!-- optional -->
 
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because [argument c]
-- … <!-- numbers of pros and cons can vary -->
+- ✅ [argument a]
+- ❌ [argument b]
 
 ### [option 3]
 
 [example | description | pointer to more information | …] <!-- optional -->
 
-- Good, because [argument a]
-- Good, because [argument b]
-- Bad, because [argument c]
-- … <!-- numbers of pros and cons can vary -->
+- ✅ [argument a]
+- ❌ [argument b]
 
 ## Links <!-- optional -->
 

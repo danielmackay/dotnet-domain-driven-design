@@ -17,10 +17,6 @@
 
 ## Key Design Decisions
 
-### Use Specifications to load aggregate roots
-
-Aggregate roots need to be loaded in their entirety.  This means the root entities and all child entities that make up the aggregate root.  To achieve this we will use specifications so that we can consistently load the aggregate root and all of its related entities in a single query.
-
 ### DomainService interfaces will need to exist in Domain
 
 Sometimes entities will need to leverage a service to perform a behavior.  In these scenarios, we will need a DomainService interface in the Domain project, and implementation in the Application or Infrastructure project.
