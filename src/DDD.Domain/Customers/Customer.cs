@@ -16,17 +16,16 @@ public class Customer : AggregateRoot<CustomerId>
     public static Customer Create(string email, string firstName, string lastName)
     {
         Guard.Against.Empty(email);
-        Guard.Against.Empty(firstName);
-        Guard.Against.Empty(lastName);
 
         var customer = new Customer()
         {
             Id = new CustomerId(Guid.NewGuid()),
             Email = email,
-            FirstName = firstName,
-            LastName = lastName
         };
+
+        customer.UpdateName(firstName, lastName);
         customer.AddDomainEvent(CustomerCreatedEvent.Create(customer));
+
         return customer;
     }
 
