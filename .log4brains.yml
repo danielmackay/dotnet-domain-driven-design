@@ -1,0 +1,5 @@
+project:
+  name: .NET Domain Driven Design
+  tz: Australia/Brisbane
+  adrFolder: ./docs/decisions
+  packages: []
