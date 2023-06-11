@@ -1,8 +1,8 @@
 ﻿namespace DDD.Domain.Common.Entities;
 
-public record Money(string Currency, decimal Amount)
+public record Money(Currency Currency, decimal Amount)
 {
-    public static Money Default => new("AUD", 0);
+    public static Money Default => new(Currency.Default, 0);
 
     public static Money Zero => Default;
 

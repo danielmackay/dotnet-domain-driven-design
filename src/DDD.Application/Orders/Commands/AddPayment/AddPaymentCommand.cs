@@ -27,7 +27,7 @@ public class AddPaymentCommandHandler : IRequestHandler<AddPaymentCommand>
             .FirstOrDefaultAsync(cancellationToken)
             ?? throw new NotFoundException();
 
-        var payment = new Money(request.Currency, request.Amount);
+        var payment = new Money(new Currency(request.Currency), request.Amount);
         order.AddPayment(payment);
 
         await _dbContext.SaveChangesAsync(cancellationToken);

@@ -69,7 +69,7 @@ public class ApplicationDbContextInitializer
         var categories = await _dbContext.Categories.ToListAsync();
 
         var moneyFaker = new Faker<Money>()
-            .CustomInstantiator(f => new Money(f.Finance.Currency().Code, f.Finance.Amount()));
+            .CustomInstantiator(f => new Money(f.PickRandom(Currency.Currencies), f.Finance.Amount()));
 
         var skuFaker = new Faker<Sku>()
             .CustomInstantiator(f => Sku.Create(f.Commerce.Ean8())!);

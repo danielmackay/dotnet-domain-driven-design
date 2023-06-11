@@ -22,7 +22,7 @@ public class Order : AggregateRoot<OrderId>
 
     public DateTimeOffset ShippingDate { get; private set; }
 
-    public string? OrderCurrency => _lineItems.FirstOrDefault()?.Price.Currency;
+    public Currency? OrderCurrency => _lineItems.FirstOrDefault()?.Price.Currency;
 
     public Money OrderTotal
     {

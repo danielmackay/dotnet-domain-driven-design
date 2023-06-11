@@ -8,7 +8,7 @@ public class MoneyTests
     public void Create_Should_Succeed_When_Money_Is_Valid()
     {
         // Arrange
-        var currency = "USD";
+        var currency = Currency.Default;
         var amount = 100;
         // Act
         var money = new Money(currency, amount);
@@ -25,7 +25,7 @@ public class MoneyTests
         var money = Money.Default;
         // Assert
         money.Should().NotBeNull();
-        money.Currency.Should().Be("AUD");
+        money.Currency.Should().BeEquivalentTo(Currency.Default);
         money.Amount.Should().Be(0);
     }
 
@@ -36,7 +36,7 @@ public class MoneyTests
         var money = Money.Default;
         // Assert
         money.Should().NotBeNull();
-        money.Currency.Should().Be("AUD");
+        money.Currency.Should().BeEquivalentTo(Currency.Default);
         money.Amount.Should().Be(0);
     }
 
@@ -44,13 +44,13 @@ public class MoneyTests
     public void Add_Should_Be_Correct_When_Two_Monies_Added()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var money3 = money1 + money2;
         // Assert
         money3.Should().NotBeNull();
-        money3.Currency.Should().Be("AUD");
+        money3.Currency.Should().BeEquivalentTo(Currency.Default);
         money3.Amount.Should().Be(300);
     }
 
@@ -58,13 +58,13 @@ public class MoneyTests
     public void Subtract_Should_Be_Correct_When_Two_Monies_Subtracted()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var money3 = money1 - money2;
         // Assert
         money3.Should().NotBeNull();
-        money3.Currency.Should().Be("AUD");
+        money3.Currency.Should().BeEquivalentTo(Currency.Default);
         money3.Amount.Should().Be(-100);
     }
 
@@ -72,8 +72,8 @@ public class MoneyTests
     public void LessThan_Should_Be_Correct_When_Two_Monies_Compared()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var result = money1 < money2;
         // Assert
@@ -84,8 +84,8 @@ public class MoneyTests
     public void LessThanOrEqual_Should_Be_Correct_When_Two_Monies_Compared()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var result = money1 <= money2;
         // Assert
@@ -96,8 +96,8 @@ public class MoneyTests
     public void GreaterThan_Should_Be_Correct_When_Two_Monies_Compared()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var result = money1 > money2;
         // Assert
@@ -108,8 +108,8 @@ public class MoneyTests
     public void GreaterThanOrEqual_Should_Be_Correct_When_Two_Monies_Compared()
     {
         // Arrange
-        var money1 = new Money("AUD", 100);
-        var money2 = new Money("AUD", 200);
+        var money1 = new Money(Currency.Default, 100);
+        var money2 = new Money(Currency.Default, 200);
         // Act
         var result = money1 >= money2;
         // Assert

@@ -15,7 +15,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
     public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var price = new Money(request.Currency, request.Amount);
+        var price = new Money(new Currency(request.Currency), request.Amount);
         var categoryId = new CategoryId(request.CategoryId);
 
         var sku = Sku.Create(request.Sku);
