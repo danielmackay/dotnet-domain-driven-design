@@ -2,13 +2,12 @@
 
 public record Currency
 {
-    private List<string> _symbols = new List<string>() { "AUD", "NZD", "GBP", "USD", "EUR", "CAD" };
 
     public string Symbol { get; }
 
     public Currency(string symbol)
     {
-        if (!_symbols.Contains(symbol.ToUpper()))
+        if (!Symbols.Contains(symbol.ToUpper()))
             throw new DomainException($"Invalid Symbol {symbol}");
 
         Symbol = symbol.ToUpper();
@@ -22,8 +21,7 @@ public record Currency
     public static Currency EUR => new Currency("EUR");
     public static Currency CAD => new Currency("CAD");
 
-    public static List<Currency> Currencies => new()
-    {
-        AUD, NZD, USD, GBP, EUR, CAD
-    };
+    private static readonly List<string> Symbols = new List<string>() { "AUD", "NZD", "GBP", "USD", "EUR", "CAD" };
+
+    public static List<Currency> Currencies => Symbols.Select(s => new Currency(s)).ToList();
 }
