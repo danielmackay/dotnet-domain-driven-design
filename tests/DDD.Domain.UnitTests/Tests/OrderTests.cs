@@ -98,7 +98,7 @@ public class OrderTests
         var customerId = new CustomerId(Guid.NewGuid());
         var productId = new ProductId(Guid.NewGuid());
         var order = Order.Create(customerId);
-        var price = new Money("USD", 0);
+        var price = new Money(Currency.Default, 0);
         var quantity = 1;
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
@@ -113,7 +113,7 @@ public class OrderTests
         var customerId = new CustomerId(Guid.NewGuid());
         var productId = new ProductId(Guid.NewGuid());
         var order = Order.Create(customerId);
-        var price = new Money("USD", -1);
+        var price = new Money(Currency.Default, -1);
         var quantity = 1;
         // Act
         Action act = () => order.AddLineItem(productId, price, quantity);
@@ -194,7 +194,7 @@ public class OrderTests
         // Arrange
         var customerId = new CustomerId(Guid.NewGuid());
         var order = Order.Create(customerId);
-        var price = new Money("USD", 0);
+        var price = new Money(Currency.Default, 0);
         // Act
         Action act = () => order.AddPayment(price);
         // Assert
@@ -207,7 +207,7 @@ public class OrderTests
         // Arrange
         var customerId = new CustomerId(Guid.NewGuid());
         var order = Order.Create(customerId);
-        var price = new Money("USD", -1);
+        var price = new Money(Currency.Default, -1);
         // Act
         Action act = () => order.AddPayment(price);
         // Assert
@@ -299,10 +299,10 @@ public class OrderTests
         // Arrange
         var customerId = new CustomerId(Guid.NewGuid());
         var order = Order.Create(customerId);
-        var productPrice = new Money("AUD", 20);
+        var productPrice = new Money(Currency.Default, 20);
         order.AddLineItem(new ProductId(Guid.NewGuid()), productPrice, 1);
         var dateTime = Substitute.For<IDateTime>();
-        var paymentPrice = new Money("AUD", 10);
+        var paymentPrice = new Money(Currency.Default, 10);
         order.AddPayment(paymentPrice);
         // Act
         Action act = () => order.ShipOrder(dateTime);

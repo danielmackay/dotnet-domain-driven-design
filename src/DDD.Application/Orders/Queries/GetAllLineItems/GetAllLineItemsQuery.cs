@@ -1,5 +1,3 @@
-using DDD.Domain.Orders;
-
 namespace DDD.Application.Orders.Queries.GetAllLineItems;
 
 public record GetAllLineItemsQuery(Guid OrderId) : IRequest<IEnumerable<LineItemDto>>;
@@ -23,7 +21,7 @@ public class GetAllLineItemsQueryHandler : IRequestHandler<GetAllLineItemsQuery,
             .Select(li => new LineItemDto(
                 li.Id.Value,
                 new ProductDto(li.ProductId.Value, li.Product!.Name, li.Product.Sku.Value),
-                new MoneyDto(li.Price.Currency, li.Price.Amount)))
+                new MoneyDto(li.Price.Currency.Symbol, li.Price.Amount)))
             .ToListAsync(cancellationToken);
     }
 }
