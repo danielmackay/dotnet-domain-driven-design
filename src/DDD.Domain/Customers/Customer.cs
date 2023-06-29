@@ -8,8 +8,7 @@ public class Customer : AggregateRoot<CustomerId>
 
     public string LastName { get; private set; } = null!;
 
-    // TODO: Turn this into a value object
-    public string? Address { get; private set; }
+    public Address? Address { get; private set; }
 
     private Customer() { }
 
@@ -17,11 +16,7 @@ public class Customer : AggregateRoot<CustomerId>
     {
         Guard.Against.Empty(email);
 
-        var customer = new Customer()
-        {
-            Id = new CustomerId(Guid.NewGuid()),
-            Email = email,
-        };
+        var customer = new Customer() { Id = new CustomerId(Guid.NewGuid()), Email = email, };
 
         customer.UpdateName(firstName, lastName);
         customer.AddDomainEvent(CustomerCreatedEvent.Create(customer));
@@ -38,10 +33,8 @@ public class Customer : AggregateRoot<CustomerId>
         LastName = lastName;
     }
 
-    public void UpdateAddress(string address)
+    public void UpdateAddress(Address address)
     {
-        Guard.Against.Empty(address);
-
         Address = address;
     }
 }
