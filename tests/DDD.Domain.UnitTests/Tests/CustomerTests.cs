@@ -134,30 +134,18 @@ public class CustomerTests
         var firstName = _faker.Name.FirstName();
         var lastName = _faker.Name.LastName();
         var customer = Customer.Create(email, firstName, lastName);
-        var address = _faker.Address.StreetAddress();
+        var street = _faker.Address.StreetAddress();
+        var city = _faker.Address.City();
+        var state = _faker.Address.State();
+        var country = _faker.Address.Country();
+        var zipCode = _faker.Address.ZipCode();
+        var address = new Address(street, null, city, state, zipCode, country);
 
         // Act
         customer.UpdateAddress(address);
 
         // Assert
         customer.Address.Should().Be(address);
-    }
-
-    [Fact]
-    public void UpdateAddress_Should_Throw_When_Address_Is_Empty()
-    {
-        // Arrange
-        var email = _faker.Internet.Email();
-        var firstName = _faker.Name.FirstName();
-        var lastName = _faker.Name.LastName();
-        var customer = Customer.Create(email, firstName, lastName);
-        var address = string.Empty;
-
-        // Act
-        Action act = () => customer.UpdateAddress(address);
-
-        // Assert
-        act.Should().Throw<EmptyDomainException>();
     }
 
     [Fact]
